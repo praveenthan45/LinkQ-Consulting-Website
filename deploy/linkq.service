@@ -1,0 +1,24 @@
+[Unit]
+Description=LinkqGlobal Consulting enquiry API
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=linkq
+Group=linkq
+WorkingDirectory=/srv/linkq
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/linkq/environment
+ExecStart=/usr/bin/node /srv/linkq/dist-server/server/index.js
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+UMask=0077
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

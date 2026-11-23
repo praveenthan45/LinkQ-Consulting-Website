@@ -1,0 +1,332 @@
+/* Motion stays within reserved frames, keeping images and captions separate. */
+.reading-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  transform-origin: left center;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 1;
+}
+.page-content {
+  animation: page-in 0.3s ease-out;
+}
+.reveal {
+  transition:
+    opacity 0.6s ease var(--reveal-delay, 0ms),
+    translate 0.6s cubic-bezier(0.2, 0.6, 0.3, 1) var(--reveal-delay, 0ms);
+}
+.reveal-pending {
+  translate: 0 18px;
+}
+.reveal:focus-within {
+  opacity: 1;
+  translate: 0 0;
+  transition-delay: 0ms;
+}
+.depth-image {
+  perspective: none;
+}
+.depth-image figure {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  transform: none;
+  transform-style: flat;
+  will-change: auto;
+}
+.depth-media {
+  position: absolute;
+  inset: -20px;
+  z-index: 0;
+  transform-style: flat;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.depth-image figcaption {
+  z-index: 1;
+  transform: none;
+  pointer-events: none;
+}
+.connection-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  min-width: 0;
+  align-items: stretch;
+  isolation: isolate;
+}
+.connection-card {
+  height: 200px;
+  min-width: 0;
+  position: relative;
+  overflow: hidden;
+  background: var(--ink);
+  border: 1px solid var(--line);
+}
+.connection-card-0 {
+  grid-column: 1/-1;
+  height: 270px;
+}
+.connection-card .depth-image {
+  height: 100%;
+}
+.connection-card .depth-image figure {
+  box-shadow: none;
+}
+.connection-card .depth-image figcaption {
+  font-size: 0.875rem;
+  padding: 40px 20px 18px;
+}
+.connection-card.reveal,
+.connection-card.reveal-pending {
+  translate: 0 0;
+}
+.compact-service .service-cover {
+  height: 410px;
+}
+.compact-service .service-introduction {
+  padding-block: 65px;
+}
+.compact-service .service-lead-grid {
+  margin: 0;
+  align-items: center;
+}
+.compact-service .service-lead-grid h2 {
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  margin-top: 18px;
+}
+.compact-service .service-lead-grid p {
+  margin-top: 20px;
+}
+.compact-service .story-chapter {
+  padding-block: 55px;
+  gap: 80px;
+}
+.compact-service .story-chapter > .depth-image {
+  height: 340px;
+}
+.compact-service .chapter-copy h2 {
+  font-size: clamp(1.8rem, 2.6vw, 2.45rem);
+}
+.compact-service .chapter-copy > p {
+  margin-top: 18px;
+}
+.compact-service .chapter-focus {
+  margin-top: 22px;
+}
+.compact-service .service-expertise {
+  padding-block: 75px;
+  border: 0;
+}
+.capability-accordion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 50px;
+}
+.capability-accordion button {
+  padding-block: 21px;
+}
+.capability-accordion [role='region'] > div > p {
+  font-size: 0.94rem;
+}
+.capability-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 18px 0 0 17px;
+  list-style: disc;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.capability-details li::marker {
+  color: var(--primary);
+}
+.compact-service .engagement-section {
+  padding-block: 75px;
+  border-top: 1px solid var(--line);
+}
+.compact-service .engagement-intro > .button {
+  margin-top: 25px;
+}
+.compact-service .engagement-intro > .text-link {
+  display: flex;
+  width: fit-content;
+  margin-top: 14px;
+}
+.compact-service .deliverable-item p {
+  margin-top: 8px;
+}
+.compact-service .related-section {
+  padding-block: 65px;
+}
+.compact-service .related-section .section-title {
+  margin-bottom: 30px;
+}
+.compact-service .related-section h2 {
+  font-size: 2.1rem;
+}
+.compact-service .masthead-tags > span + span {
+  border: 0;
+  padding-left: 0;
+}
+.compact-service .masthead-tags span:not(:last-child)::after {
+  content: '·';
+  display: inline-block;
+  margin-left: 14px;
+  color: var(--muted);
+}
+.cta-action {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+.cta-copy p {
+  max-width: 510px;
+}
+.footer-grid .reveal {
+  min-width: 0;
+}
+.footer-grid > div > a:not(.logo) {
+  text-decoration-color: transparent;
+  text-underline-offset: 6px;
+  transition:
+    color 0.2s,
+    text-decoration-color 0.2s;
+}
+.footer-grid > div > a:not(.logo):hover {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+}
+.footer-bottom.reveal {
+  transition-duration: 0.45s;
+  translate: 0 0;
+}
+@keyframes page-in {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 1023px) {
+  .connection-gallery {
+    gap: 16px;
+  }
+  .connection-card {
+    height: 175px;
+  }
+  .connection-card-0 {
+    height: 235px;
+  }
+  .compact-service .story-chapter {
+    gap: 40px;
+  }
+  .compact-service .story-chapter > .depth-image {
+    height: 360px;
+  }
+}
+@media (max-width: 767px) {
+  .connection-gallery {
+    max-width: 520px;
+    width: 100%;
+    margin-inline: auto;
+    gap: 16px;
+  }
+  .connection-card {
+    height: 185px;
+  }
+  .connection-card-0 {
+    height: 230px;
+  }
+  .connection-card .depth-image figcaption {
+    padding: 40px 15px 16px;
+    font-size: 0.8rem;
+  }
+  .compact-service .service-cover {
+    height: 300px;
+  }
+  .compact-service .service-introduction {
+    padding-block: 45px;
+  }
+  .compact-service .story-chapter {
+    padding-block: 40px;
+    gap: 28px;
+  }
+  .compact-service .story-chapter > .depth-image {
+    height: 280px;
+  }
+  .compact-service .chapter-copy h2 {
+    font-size: 2rem;
+  }
+  .compact-service .chapter-copy p {
+    margin-top: 17px;
+  }
+  .compact-service .chapter-focus {
+    margin-top: 20px;
+  }
+  .compact-service .service-expertise,
+  .compact-service .engagement-section {
+    padding-block: 55px;
+  }
+  .capability-accordion {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .capability-accordion button {
+    padding-block: 20px;
+  }
+  .compact-service .related-section {
+    padding-block: 50px;
+  }
+  .compact-service .related-section h2 {
+    font-size: 1.9rem;
+  }
+  .cta-action {
+    margin-top: 27px;
+  }
+  .cta-action > .button {
+    margin: 0;
+  }
+  .footer-grid > .reveal {
+    transition-delay: 0ms;
+  }
+}
+@media (max-width: 359px) {
+  .connection-gallery {
+    gap: 13px;
+  }
+  .connection-card {
+    height: 155px;
+  }
+  .connection-card-0 {
+    height: 210px;
+  }
+  .connection-card .depth-image figcaption {
+    font-size: 0.76rem;
+    padding-inline: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress {
+    display: none;
+  }
+  .page-content,
+  .reveal {
+    animation: none;
+    transition: none;
+  }
+  .reveal-pending {
+    opacity: 1;
+    translate: 0 0;
+  }
+  .depth-media {
+    transform: none !important;
+    will-change: auto;
+  }
+}

@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+model Enquiry {
+  id String @id @default(uuid()) @db.Uuid
+  fullName String @map("full_name") @db.VarChar(150)
+  businessEmail String @map("business_email") @db.VarChar(255)
+  phoneNumber String? @map("phone_number") @db.VarChar(30)
+  organization String @db.VarChar(200)
+  industry String @db.VarChar(100)
+  service String @db.VarChar(100)
+  subject String @db.VarChar(200)
+  message String @db.Text
+  consentGiven Boolean @map("consent_given")
+  consentTimestamp DateTime @map("consent_timestamp") @db.Timestamptz(3)
+  status String @default("new") @db.VarChar(30)
+  idempotencyKey String @unique @map("idempotency_key") @db.VarChar(36)
+  contentHash String @map("content_hash") @db.VarChar(64)
+  notificationStatus String @default("not_configured") @map("notification_status") @db.VarChar(30)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+  @@index([createdAt])
+  @@map("enquiries")
+}
