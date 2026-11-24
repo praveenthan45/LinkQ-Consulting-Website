@@ -205,11 +205,18 @@ export function InsightCard({ article: a }: { article: (typeof insights)[number]
   return (
     <Link className="insight-card" to={`/insights/${a.slug}`}>
       <div className="insight-image">
-        <Photo name={a.image} alt={`${a.category} business environment`} />
+        <Photo name={a.image} alt={a.imageAlt} />
         <span className="category-tag">{a.category}</span>
       </div>
       <div className="insight-meta">
-        <span>23 NOV 2026</span>
+        <time dateTime={a.date}>
+          {new Intl.DateTimeFormat('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+            timeZone: 'UTC',
+          }).format(new Date(`${a.date}T00:00:00Z`)).toUpperCase()}
+        </time>
         <span>{a.readTime}</span>
       </div>
       <h3>{a.title}</h3>

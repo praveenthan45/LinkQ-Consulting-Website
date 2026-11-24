@@ -142,6 +142,8 @@ export function createApp({
     }
   });
   app.use('/api', (_req, res) => res.status(404).json({ message: 'Endpoint not found.' }));
+  app.get('/services', (_req, res) => res.redirect(308, '/industries'));
+  app.get('/approach', (_req, res) => res.redirect(308, '/collaboration'));
   if (process.env.NODE_ENV === 'production') {
     const dist = path.resolve('dist');
     app.use(express.static(dist, { index: false, redirect: false }));

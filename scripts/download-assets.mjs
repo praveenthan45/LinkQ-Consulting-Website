@@ -26,6 +26,43 @@ const photos = {
   'fmcg-cover': 'photo-1578916171728-46686eac8d58',
   'education-cover': 'photo-1758270704851-adff797a2010',
   'automation-cover': 'photo-1783419482520-2f8b80a40369',
+  'services-banner': 'photo-1758873269181-270f5b7fc6aa',
+  'industries-banner': 'photo-1587293852726-70cdb56c2866',
+  'approach-banner': 'photo-1623652554515-91c833e3080e',
+  'insights-banner': 'photo-1608222351212-18fe0ec7b13b',
+  'contact-banner': 'photo-1758519288495-5f79a4bbab83',
+  'terms-banner': 'photo-1695388474402-ed805a890d8d',
+  'gallery-operations': 'photo-1717386255773-1e3037c81788',
+  'gallery-technology': 'photo-1550751827-4bd374c3f58b',
+  'gallery-people': 'photo-1517048676732-d65bc937f952',
+  'home-manufacturing': 'photo-1581091212991-8891c7d4bd9b',
+  'home-fmcg': 'photo-1604719312566-8912e9227c6a',
+  'insight-it': 'photo-1517245386807-bb43f82c33c4',
+  'insight-manufacturing': 'photo-1496247749665-49cf5b1022e9',
+  'insight-fmcg': 'photo-1760776140488-32fcfab4066a',
+  'insight-education': 'photo-1577896851231-70ef18881754',
+  'insight-automation': 'photo-1780034766228-3fd70d9463c3',
+};
+const pexelsPhotos = {
+  'strategy-card': 5668492,
+  'strategy-cover': 36733316,
+  'strategy-planning': 7984479,
+  'strategy-priorities': 7710074,
+  'insight-strategy': 7710156,
+  'analytics-card': 7688076,
+  'analytics-cover': 6779570,
+  'analytics-data': 6120209,
+  'analytics-ai': 34804005,
+  'insight-analytics': 39219944,
+  'supply-card': 4483941,
+  'supply-cover': 30824313,
+  'supply-flow': 13025947,
+  'supply-inventory': 4483558,
+  'insight-supply': 5876475,
+  'investment-card': 5921653,
+  'investment-cover': 33719771,
+  'industry-strategy-card': 9034238,
+  'industry-strategy-cover': 7433898,
 };
 await mkdir('public/images', { recursive: true });
 await mkdir('public/fonts', { recursive: true });
@@ -43,6 +80,21 @@ for (const [name, id] of Object.entries(photos)) {
       `public/images/${name}${suffix}.webp`,
       Buffer.from(await response.arrayBuffer()),
     );
+  }
+  console.info(`Saved ${name}`);
+}
+for (const [name, id] of Object.entries(pexelsPhotos)) {
+  if (process.argv.length > 2 && !process.argv.slice(2).includes(name)) continue;
+  for (const [suffix, width] of [
+    ['', 1200],
+    ['-small', 640],
+  ]) {
+    const url = `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${width}&fm=webp`;
+    const response = await fetch(url, { signal: AbortSignal.timeout(30000) });
+    if (!response.ok || !response.headers.get('content-type')?.includes('image/webp')) {
+      throw new Error(`${name}: expected WebP, received ${response.status} ${response.headers.get('content-type')}`);
+    }
+    await writeFile(`public/images/${name}${suffix}.webp`, Buffer.from(await response.arrayBuffer()));
   }
   console.info(`Saved ${name}`);
 }

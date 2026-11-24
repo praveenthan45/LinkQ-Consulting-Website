@@ -21,6 +21,7 @@ import { Breadcrumb, PageHero } from '../components/Common';
 export function Contact() {
   const [params] = useSearchParams();
   const requested = params.get('service');
+  const requestedIndustry = params.get('industry');
   const {
     register,
     handleSubmit,
@@ -33,6 +34,9 @@ export function Contact() {
       phoneNumber: '',
       website: '',
       consentGiven: false,
+      industry: industries.includes(requestedIndustry as (typeof industries)[number])
+        ? (requestedIndustry as (typeof industries)[number])
+        : undefined,
       subject: serviceOptions.includes(requested as (typeof serviceOptions)[number])
         ? `Consultation about ${requested}`
         : '',
@@ -140,39 +144,39 @@ export function Contact() {
       <Breadcrumb label="Contact" />
       <PageHero
         eyebrow="LET’S START A CONVERSATION"
-        image="advisory"
-        alt="Colleagues discussing business priorities in a consultation workshop"
+        image="contact-banner"
+        alt="Two business professionals discussing a consulting enquiry"
         title={
           <>
-            Your next challenge.
-            <br />A fresh perspective.
+            Your business ambition.
+            <br />A wider opportunity.
           </>
         }
-        description="Tell us a little about your organization and what you’re working toward. Let’s explore the consulting support that makes sense for you."
+        description="Tell us about your business, the market you want to reach, and the kind of global collaboration you have in mind."
       />
       <div className="container contact-layout">
         <aside className="contact-aside">
           <h2>
-            Good conversations
+            A useful partnership
             <br />
-            lead to clearer possibilities.
+            begins with a clear case.
           </h2>
-          <p>Whether you have a defined project or an early question, share what’s on your mind.</p>
+          <p>Whether you have a partner in mind or are still exploring, start with your current business and your goal.</p>
           {[
             {
               icon: MessagesSquare,
               title: 'Share your context',
-              text: 'Tell us about your priorities, challenges, and what you would like to improve.',
+              text: 'Describe your offering, current market, capacity, and collaboration goal.',
             },
             {
               icon: ClipboardCheck,
-              title: 'Explore the possibilities',
-              text: 'We’ll review your enquiry and discuss the support that may be appropriate.',
+              title: 'Review readiness',
+              text: 'We’ll discuss the business case, evidence, and any verification or certification needs.',
             },
             {
               icon: Handshake,
-              title: 'Agree on the next step',
-              text: 'If there is a fit, we’ll work with you to define the scope and engagement.',
+              title: 'Plan the next step',
+              text: 'If there is a fit, we’ll scope the work before any partner outreach.',
             },
           ].map((s) => (
             <div className="contact-step" key={s.title}>
@@ -215,7 +219,7 @@ export function Contact() {
           ) : (
             <form onSubmit={handleSubmit(submit)} noValidate>
               <div className="form-header">
-                <h2>Let’s talk about your business.</h2>
+                <h2>Let’s talk about your collaboration goal.</h2>
                 <p>Fields marked with * are required.</p>
               </div>
               {failure && (
@@ -269,7 +273,7 @@ export function Contact() {
                 </div>
                 <div className="form-field">
                   <label htmlFor="service">
-                    Consulting service <span aria-hidden="true">*</span>
+                    Consulting focus <span aria-hidden="true">*</span>
                   </label>
                   <select
                     id="service"
@@ -279,7 +283,7 @@ export function Contact() {
                     defaultValue={requested || ''}
                   >
                     <option value="" disabled>
-                      Select a service
+                      Select a focus
                     </option>
                     {serviceOptions.map((i) => (
                       <option key={i}>{i}</option>
@@ -302,7 +306,7 @@ export function Contact() {
                   <textarea
                     id="message"
                     {...register('message')}
-                    placeholder="Tell us about your goals, current challenges, and the support you’re looking for…"
+                    placeholder="Tell us what your business offers, the market you want to reach, and the partner or support you’re looking for…"
                     rows={5}
                     maxLength={10000}
                     aria-invalid={!!errors.message}

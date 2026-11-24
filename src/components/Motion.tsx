@@ -100,9 +100,9 @@ export function PerspectiveStack() {
       aria-label="Connected perspectives across people, operations, and technology"
     >
       {[
-        { image: 'manufacturing', label: 'Operations', alt: 'Automated manufacturing line' },
-        { image: 'data-center', label: 'Technology', alt: 'Enterprise server infrastructure' },
-        { image: 'advisory', label: 'People', alt: 'Colleagues discussing a business process' },
+        { image: 'gallery-operations', label: 'Operations', alt: 'Production machinery on a factory floor' },
+        { image: 'gallery-technology', label: 'Technology', alt: 'Electronic systems supporting connected technology' },
+        { image: 'gallery-people', label: 'People', alt: 'Colleagues discussing a business plan around a table' },
       ].map((item, index) => (
         <Reveal
           key={item.label}

@@ -44,8 +44,8 @@ const policies = {
   '/terms-of-use': {
     name: 'Terms of use',
     description: 'The basis for using this website and its educational content.',
-    image: 'university-library',
-    imageAlt: 'Reference books and written information',
+    image: 'terms-banner',
+    imageAlt: 'Professional reviewing written terms and documents',
     sections: [
       [
         'Using the website',

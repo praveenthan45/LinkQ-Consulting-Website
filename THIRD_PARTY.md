@@ -50,6 +50,51 @@ The service-detail hero photographs below are distinct from catalog, homepage, i
 - Education — Vitaly Gariev: https://unsplash.com/photos/professor-lecturing-to-students-in-a-classroom-setting-vyuiyIyboc0 ; source: https://images.unsplash.com/photo-1758270704851-adff797a2010
 - Automation — Aleksandr Lyaptsev: https://unsplash.com/photos/lTAh5dGmN-8 ; source: https://images.unsplash.com/photo-1783419482520-2f8b80a40369
 
+### Distinct page and section photographs
+
+Additional locally optimized Unsplash photographs give the services, industries, approach, contact, insights, home industry, and scroll gallery sections their own relevant imagery. They illustrate general environments only and do not depict LinkqGlobal projects or staff. The Unsplash license allows commercial use: https://unsplash.com/license.
+
+- Services banner: https://images.unsplash.com/photo-1758873269181-270f5b7fc6aa
+- Industries banner: https://images.unsplash.com/photo-1587293852726-70cdb56c2866
+- Approach banner: https://images.unsplash.com/photo-1623652554515-91c833e3080e
+- Insights banner: https://images.unsplash.com/photo-1608222351212-18fe0ec7b13b
+- Contact banner: https://images.unsplash.com/photo-1758519288495-5f79a4bbab83
+- Terms banner: https://images.unsplash.com/photo-1695388474402-ed805a890d8d
+- Operations gallery: https://images.unsplash.com/photo-1717386255773-1e3037c81788
+- Technology gallery: https://images.unsplash.com/photo-1550751827-4bd374c3f58b
+- People gallery: https://images.unsplash.com/photo-1517048676732-d65bc937f952
+- Home manufacturing: https://images.unsplash.com/photo-1581091212991-8891c7d4bd9b
+- Home FMCG: https://images.unsplash.com/photo-1604719312566-8912e9227c6a
+- Technology insight: https://images.unsplash.com/photo-1517245386807-bb43f82c33c4
+- Manufacturing insight: https://images.unsplash.com/photo-1496247749665-49cf5b1022e9
+- FMCG insight: https://images.unsplash.com/photo-1760776140488-32fcfab4066a
+- Education insight: https://images.unsplash.com/photo-1577896851231-70ef18881754
+- Automation insight: https://images.unsplash.com/photo-1780034766228-3fd70d9463c3
+
+### Photography for the three additional services
+
+These locally stored WebP photographs come from Pexels and are used as illustrative environments, not as LinkqGlobal staff, client, or project imagery. The [Pexels license](https://www.pexels.com/license/) permits commercial website use. The 1200px and 640px versions are downloaded by `scripts/download-assets.mjs`.
+
+- Business strategy card: https://www.pexels.com/photo/5668492/
+- Business strategy cover: https://www.pexels.com/photo/36733316/
+- Business strategy planning: https://www.pexels.com/photo/7984479/
+- Business strategy priorities: https://www.pexels.com/photo/7710074/
+- Business strategy insight: https://www.pexels.com/photo/7710156/
+- Data analytics card: https://www.pexels.com/photo/7688076/
+- Data analytics cover: https://www.pexels.com/photo/6779570/
+- Data foundations: https://www.pexels.com/photo/6120209/
+- Data and AI evaluation: https://www.pexels.com/photo/34804005/
+- Data and AI insight: https://www.pexels.com/photo/39219944/
+- Supply chain card: https://www.pexels.com/photo/4483941/
+- Supply chain cover: https://www.pexels.com/photo/30824313/
+- Supply chain flow: https://www.pexels.com/photo/13025947/
+- Supply chain inventory: https://www.pexels.com/photo/4483558/
+- Supply chain insight: https://www.pexels.com/photo/5876475/
+- Investment and real estate card: https://www.pexels.com/photo/5921653/
+- Investment and real estate cover: https://www.pexels.com/photo/33719771/
+- Business Strategy practice card: https://www.pexels.com/photo/9034238/
+- Business Strategy practice cover: https://www.pexels.com/photo/7433898/
+
 ### Font and icon licenses
 
 Manrope and Inter variable fonts are copied from the `@fontsource-variable` packages and served locally. Both use the SIL Open Font License; copies are kept in `public/fonts/`. Lucide icons are provided by `lucide-react` under the ISC license. Runtime packages retain their license notices in `node_modules`.

@@ -254,4 +254,97 @@ export const serviceStories: Record<string, ServiceStory> = {
       },
     ],
   },
+  'business-strategy': {
+    summary:
+      'Choose where to focus and how to follow through. We test assumptions, connect market opportunities with internal capacity, and turn priorities into an owned plan.',
+    positioning: 'Direction that leads to decisions.',
+    lead: 'Bring the choices, tradeoffs, and people needed to deliver a strategy into the same conversation.',
+    chapters: [
+      {
+        label: 'STRATEGIC CHOICES',
+        title: 'Focus on the opportunities that fit.',
+        summary:
+          'We examine customer needs, market evidence, and organizational strengths before comparing growth options. The result is a clearer basis for saying yes, no, or not yet.',
+        image: 'strategy-planning',
+        alt: 'Two professionals working through a plan on a whiteboard',
+        focus: ['Market and customer questions', 'Capability and resource constraints', 'Explicit strategic tradeoffs'],
+      },
+      {
+        label: 'EXECUTION & OWNERSHIP',
+        title: 'Make the next steps visible.',
+        summary:
+          'We translate direction into a sequence of initiatives with owners, dependencies, and review points, so the plan can guide day-to-day decisions.',
+        image: 'strategy-priorities',
+        alt: 'Colleagues arranging priorities on a whiteboard with sticky notes',
+        focus: ['Operating model and decision rights', 'Initiative sequencing', 'Measures and management reviews'],
+      },
+    ],
+    deliverables: [
+      { title: 'A strategic assessment', text: 'The choices to make, evidence available, and assumptions to test.' },
+      { title: 'A focused direction', text: 'Priorities and tradeoffs linked to your capabilities and goals.' },
+      { title: 'An execution roadmap', text: 'Owners, dependencies, milestones, and review points for the agreed plan.' },
+    ],
+  },
+  'data-analytics-ai': {
+    summary:
+      'Use data to answer real business questions. We assess information quality, shape useful reporting, and evaluate AI opportunities with clear controls and success criteria.',
+    positioning: 'Clarity before the model.',
+    lead: 'Start with the decision to improve, then examine whether the data and approach are fit for that purpose.',
+    chapters: [
+      {
+        label: 'DATA FOUNDATIONS',
+        title: 'Make information dependable.',
+        summary:
+          'We trace important data back to its source, compare definitions across teams, and identify gaps that would weaken reporting or an AI pilot.',
+        image: 'analytics-data',
+        alt: 'Laptop displaying data charts beside a working notebook',
+        focus: ['Data sources and definitions', 'Quality and ownership', 'Decision-focused reporting requirements'],
+      },
+      {
+        label: 'AI WITH PURPOSE',
+        title: 'Test a use case before scaling it.',
+        summary:
+          'We frame a bounded problem, set evaluation criteria, and define where people review outputs and handle exceptions.',
+        image: 'analytics-ai',
+        alt: 'Laptop showing a coding and data analysis interface',
+        focus: ['Feasibility and risk assessment', 'Pilot measures and baselines', 'Human review and monitoring'],
+      },
+    ],
+    deliverables: [
+      { title: 'A data readiness review', text: 'Key sources, quality issues, definitions, and ownership gaps.' },
+      { title: 'An analytics brief', text: 'The questions, measures, and reporting needs that matter to users.' },
+      { title: 'An AI pilot plan', text: 'A bounded use case with evaluation, oversight, and decision points.' },
+    ],
+  },
+  'supply-chain-operations': {
+    summary:
+      'Improve the flow of goods and information from suppliers to customers. We map constraints, clarify responsibilities, and prioritize changes to planning and fulfillment.',
+    positioning: 'See the whole flow.',
+    lead: 'Find the handoffs behind shortages, delays, and avoidable work before choosing the next improvement.',
+    chapters: [
+      {
+        label: 'PLANNING & SUPPLY',
+        title: 'Connect demand to available capacity.',
+        summary:
+          'We review forecasting, supplier commitments, lead times, and planning routines to understand where expectations diverge from reality.',
+        image: 'supply-flow',
+        alt: 'Shipping containers and cranes at a working port',
+        focus: ['Demand and supply planning', 'Supplier lead-time visibility', 'Capacity and risk scenarios'],
+      },
+      {
+        label: 'INVENTORY & DELIVERY',
+        title: 'Follow the order to the customer.',
+        summary:
+          'We trace stock and orders through receiving, storage, picking, and fulfillment, then identify the exceptions and measures that need attention.',
+        image: 'supply-inventory',
+        alt: 'Warehouse employees discussing logistics around a forklift',
+        focus: ['Inventory and replenishment rules', 'Warehouse handoffs', 'Order and service performance'],
+      },
+    ],
+    deliverables: [
+      { title: 'A flow assessment', text: 'Constraints and responsibilities across supply, stock, and delivery.' },
+      { title: 'An improvement plan', text: 'Priorities based on service impact, feasibility, and dependencies.' },
+      { title: 'A review framework', text: 'Shared measures and routines for availability, lead time, and exceptions.' },
+    ],
+  },
 };

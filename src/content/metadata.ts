@@ -1,48 +1,48 @@
 import { services } from './services';
 import { insights } from './insights';
+import { industries } from './industries';
+
 export const siteUrl = (import.meta.env.VITE_SITE_URL || '').replace(/\/$/, '');
+
 export const staticRoutes = [
   '/',
   '/about',
-  '/services',
   '/industries',
-  '/approach',
+  '/collaboration',
   '/insights',
   '/contact',
   '/privacy-policy',
   '/terms-of-use',
   '/cookie-policy',
   ...services.map((s) => `/services/${s.slug}`),
+  ...industries.map((i) => `/industries/${i.slug}`),
   ...insights.map((a) => `/insights/${a.slug}`),
 ];
+
 const titles: Record<string, [string, string]> = {
   '/': [
-    'Business clarity. Practical progress.',
-    'LinkqGlobal Consulting connects business priorities with practical consulting across IT, manufacturing, FMCG, education, and automation.',
+    'Local ambition. Global opportunity.',
+    'LinkqGlobal helps growing local businesses build a business case, prepare verification and certification evidence, and seek suitable global industry collaborators.',
   ],
   '/about': [
     'About LinkqGlobal',
-    'Meet LinkqGlobal Consulting and explore our business-focused approach to practical improvement and organizational change.',
-  ],
-  '/services': [
-    'Our consulting services',
-    'Explore IT, manufacturing, FMCG, education, and technology and automation consulting capabilities shaped around your business goals.',
+    'Learn how LinkqGlobal helps local businesses prepare for global industry collaboration through business analysis, readiness work, and partner planning.',
   ],
   '/industries': [
-    'Industries we focus on',
-    'Explore the operating contexts, business challenges, and consulting needs of technology, manufacturing, consumer goods, and educational organizations.',
+    'Industry expertise',
+    'Explore industry-specific consulting that prepares local businesses for credible global collaboration.',
   ],
-  '/approach': [
-    'Our consulting approach',
-    'Discover a structured consulting methodology: discovery, current-state assessment, opportunity identification, roadmaps, implementation support, and review.',
+  '/collaboration': [
+    'Global collaboration consulting',
+    'LinkqGlobal helps small businesses and startups build a business case, prepare verification and certification evidence, identify global industry partners, and plan a collaboration.',
   ],
   '/insights': [
     'Ideas & perspectives',
-    'Read practical perspectives on digital transformation, manufacturing visibility, FMCG distribution, education, and business process automation.',
+    'Read practical perspectives on enterprise technology, manufacturing, FMCG, retail distribution, automation, strategy, data and AI, and supply chains.',
   ],
   '/contact': [
     'Start a conversation',
-    'Tell LinkqGlobal Consulting about your business priorities and explore the consulting support that may be right for your organization.',
+    'Tell LinkqGlobal about your business and the global collaboration you hope to build. Start with a consultation.',
   ],
   '/privacy-policy': [
     'Privacy policy',
@@ -57,29 +57,38 @@ const titles: Record<string, [string, string]> = {
     'Learn about the LinkqGlobal website implementation, which does not set analytics, advertising, or tracking cookies.',
   ],
 };
+
 export function getPageMeta(path: string) {
   const s = services.find((s) => path === `/services/${s.slug}`);
+  const ind = industries.find((i) => path === `/industries/${i.slug}`);
   const a = insights.find((a) => path === `/insights/${a.slug}`);
+
   const entry = s
     ? [s.name, s.intro]
-    : a
-      ? [a.title, a.summary]
-      : titles[path] || [
-          'Page not found',
-          'Find your way to LinkqGlobal consulting services, insights, and contact information.',
-        ];
+    : ind
+      ? [ind.name, ind.description]
+      : a
+        ? [a.title, a.summary]
+        : titles[path] || [
+            'Page not found',
+            'Find your way to LinkqGlobal consulting services, insights, and contact information.',
+          ];
+
   return {
     title: `${entry[0]} | LinkqGlobal Consulting`,
     description: entry[1],
-    image: `${siteUrl}/images/${s?.coverImage || a?.image || 'hero'}.webp`,
+    image: `${siteUrl}/images/${s?.coverImage || ind?.heroImage || ind?.image || a?.image || 'hero'}.webp`,
     canonical: siteUrl ? `${siteUrl}${path}` : '',
     noindex: !siteUrl || !staticRoutes.includes(path),
     service: s,
+    industry: ind,
     article: a,
   };
 }
+
 const esc = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 export function renderHead(path: string) {
   const m = getPageMeta(path);
   const structured = {

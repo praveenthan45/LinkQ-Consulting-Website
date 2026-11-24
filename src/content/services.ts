@@ -1,4 +1,4 @@
-import { Monitor, Factory, Package, GraduationCap, Workflow } from 'lucide-react';
+import { Monitor, Factory, Package, GraduationCap, Workflow, Target, ChartNoAxesCombined, Truck } from 'lucide-react';
 export const services = [
   {
     slug: 'it-consulting',
@@ -7,6 +7,8 @@ export const services = [
     icon: Monitor,
     image: 'technology',
     alt: 'Technology colleagues discussing work on laptops through a glass meeting room wall',
+    industryImage: 'data-center',
+    industryAlt: 'Enterprise server racks supporting business technology',
     coverImage: 'it-advisory-cover',
     coverAlt: 'Server racks with connected electronic components and network wiring',
     description: 'Make technology decisions that move your business forward.',
@@ -111,6 +113,8 @@ export const services = [
     icon: Factory,
     image: 'manufacturing',
     alt: 'Industrial production facility with manufacturing equipment',
+    industryImage: 'industrial-engineering',
+    industryAlt: 'Engineer inspecting an industrial component',
     coverImage: 'manufacturing-cover',
     coverAlt: 'Orange robotic arms working along an industrial manufacturing line',
     description: 'Build more efficient, visible, and consistent operations.',
@@ -215,6 +219,8 @@ export const services = [
     icon: Package,
     image: 'fmcg',
     alt: 'Organized warehouse and distribution facility',
+    industryImage: 'retail-distribution',
+    industryAlt: 'Consumer goods arranged for retail distribution',
     coverImage: 'fmcg-cover',
     coverAlt: 'Supermarket aisle with shelves of packaged consumer goods',
     description: 'Connect supply, distribution, and commercial execution.',
@@ -319,6 +325,8 @@ export const services = [
     icon: GraduationCap,
     image: 'education',
     alt: 'Adult learners attending a professional classroom presentation',
+    industryImage: 'university-campus',
+    industryAlt: 'University campus supporting higher education',
     coverImage: 'education-cover',
     coverAlt: 'Students and a lecturer discussing a topic in a university classroom',
     description: 'Support institutions, educators, and better ways of working.',
@@ -423,6 +431,8 @@ export const services = [
     icon: Workflow,
     image: 'automation',
     alt: 'Industrial automation machinery and connected production systems',
+    industryImage: 'engineering-planning',
+    industryAlt: 'Engineering plan for industrial process improvement',
     coverImage: 'automation-cover',
     coverAlt: 'Connected controllers and wiring inside an industrial automation cabinet',
     description: 'Turn repetitive work into opportunities for improvement.',
@@ -520,6 +530,220 @@ export const services = [
       ],
     ],
   },
+  {
+    slug: 'business-strategy',
+    name: 'Business Strategy Consulting',
+    shortName: 'Business strategy',
+    icon: Target,
+    image: 'strategy-card',
+    alt: 'Business leaders discussing a plan around a meeting table',
+    industryImage: 'strategy-card',
+    industryAlt: 'Business leaders discussing a plan around a meeting table',
+    coverImage: 'strategy-cover',
+    coverAlt: 'Team reviewing charts and commercial priorities in a strategy meeting',
+    description: 'Turn business priorities into decisions and a workable plan.',
+    headline: 'A strategy your team can act on.',
+    intro:
+      'Make deliberate choices about where to grow, what to improve, and what to stop. We bring evidence, operating realities, and leadership priorities into one practical strategy.',
+    tags: ['Growth choices', 'Operating model', 'Execution planning'],
+    context:
+      'Strategy is useful when it guides everyday decisions. We connect market opportunities with the capabilities, resources, and tradeoffs needed to pursue them.',
+    challenges: [
+      'Competing initiatives without a shared priority',
+      'Growth targets without a clear route to delivery',
+      'Decisions based on assumptions that have not been tested',
+      'Unclear ownership after the strategy is agreed',
+    ],
+    capabilities: [
+      {
+        title: 'Strategic assessment',
+        text: 'Establish the choices that need to be made.',
+        items: ['Business model review', 'Market and customer evidence', 'Internal capability assessment', 'Strategic issue framing'],
+      },
+      {
+        title: 'Growth and portfolio choices',
+        text: 'Compare opportunities against what the organization can deliver.',
+        items: ['Market opportunity screening', 'Customer and segment priorities', 'Offer and portfolio review', 'Growth option evaluation'],
+      },
+      {
+        title: 'Operating model',
+        text: 'Connect the direction to people, processes, and decision rights.',
+        items: ['Role and responsibility mapping', 'Cross-functional handoffs', 'Governance and decision routines', 'Capability gap identification'],
+      },
+      {
+        title: 'Execution roadmap',
+        text: 'Translate choices into a manageable sequence of work.',
+        items: ['Initiative prioritization', 'Dependencies and resource needs', 'Milestones and ownership', 'Decision checkpoints'],
+      },
+      {
+        title: 'Performance review',
+        text: 'Agree how progress will be judged and when to adjust course.',
+        items: ['Outcome measures and baselines', 'Management review cadence', 'Assumption tracking', 'Strategy refresh planning'],
+      },
+    ],
+    outcomes: [
+      'A focused set of strategic choices and tradeoffs',
+      'A roadmap with owners, dependencies, and decision points',
+      'Measures for reviewing progress against the plan',
+    ],
+    faq: [
+      [
+        'Do you write a strategy without involving our team?',
+        'No. We work with decision-makers and people close to customers and operations. Their knowledge is needed to test assumptions and make the plan usable.',
+      ],
+      [
+        'Can this begin with one business question?',
+        'Yes. A focused engagement may examine a market, product line, growth option, or operating challenge before a broader strategy is considered.',
+      ],
+      [
+        'How do you keep the plan practical?',
+        'We make the required choices explicit, identify resource and capability constraints, and agree ownership and review points before recommending a sequence of work.',
+      ],
+    ],
+  },
+  {
+    slug: 'data-analytics-ai',
+    name: 'Data Analytics & AI Consulting',
+    shortName: 'Data analytics & AI',
+    icon: ChartNoAxesCombined,
+    image: 'analytics-card',
+    alt: 'Colleagues reviewing business figures and digital devices together',
+    industryImage: 'analytics-card',
+    industryAlt: 'Colleagues reviewing business figures and digital devices together',
+    coverImage: 'analytics-cover',
+    coverAlt: 'Business data and charts being examined at a workstation',
+    description: 'Make data useful and evaluate AI where it can help.',
+    headline: 'Better questions. More useful data.',
+    intro:
+      'Start with the decisions your teams need to make. We assess data quality, reporting gaps, and suitable AI opportunities before recommending tools or pilots.',
+    tags: ['Data foundations', 'Decision support', 'Responsible AI'],
+    context:
+      'A dashboard or AI model is only as useful as its inputs and the decisions it supports. We focus on trustworthy information, clear ownership, and practical ways to evaluate results.',
+    challenges: [
+      'Conflicting figures across reports and teams',
+      'Data that is difficult to find, combine, or trust',
+      'AI ideas without a defined business problem',
+      'Unclear review and accountability for AI outputs',
+    ],
+    capabilities: [
+      {
+        title: 'Data readiness',
+        text: 'Understand the information available before designing a solution.',
+        items: ['Source and quality assessment', 'Data ownership and definitions', 'Access and privacy requirements', 'Readiness priorities'],
+      },
+      {
+        title: 'Analytics and reporting',
+        text: 'Build reporting around decisions, not dashboard volume.',
+        items: ['Business question workshops', 'KPI definition and baselines', 'Reporting requirements', 'Dashboard evaluation'],
+      },
+      {
+        title: 'AI opportunity assessment',
+        text: 'Identify bounded use cases with a clear way to test value.',
+        items: ['Use-case discovery', 'Feasibility and risk review', 'Human review requirements', 'Pilot success criteria'],
+      },
+      {
+        title: 'Data and AI governance',
+        text: 'Clarify who can use data and who is responsible for outcomes.',
+        items: ['Information stewardship', 'Access and retention considerations', 'Model evaluation principles', 'Monitoring and escalation paths'],
+      },
+      {
+        title: 'Adoption planning',
+        text: 'Help teams use new information in their existing work.',
+        items: ['User needs and training', 'Review routines', 'Feedback and correction process', 'Phased rollout planning'],
+      },
+    ],
+    outcomes: [
+      'A clearer picture of data quality and ownership',
+      'Reporting requirements tied to business decisions',
+      'An evidence-based plan for a bounded AI pilot',
+    ],
+    faq: [
+      [
+        'Do we need an AI platform before we begin?',
+        'No. We first define the business question, review available data, and decide whether analytics, process change, or an AI approach is appropriate.',
+      ],
+      [
+        'Can you guarantee an AI model will be accurate?',
+        'No. Accuracy depends on the task, data, and evaluation method. A pilot should set measurable acceptance criteria and a human review path before wider use.',
+      ],
+      [
+        'How is this different from IT or automation consulting?',
+        'This service focuses on data quality, analysis, and AI decision support. IT consulting addresses broader systems and infrastructure; automation consulting focuses on executing specific workflows.',
+      ],
+    ],
+  },
+  {
+    slug: 'supply-chain-operations',
+    name: 'Supply Chain & Operations Consulting',
+    shortName: 'Supply chain & operations',
+    icon: Truck,
+    image: 'supply-card',
+    alt: 'Warehouse worker checking stock with a handheld scanner',
+    industryImage: 'supply-card',
+    industryAlt: 'Warehouse worker checking stock with a handheld scanner',
+    coverImage: 'supply-cover',
+    coverAlt: 'Warehouse teams and equipment moving goods through storage aisles',
+    description: 'Improve the flow from suppliers to customers.',
+    headline: 'A clearer path from plan to delivery.',
+    intro:
+      'See how demand, procurement, inventory, warehousing, and fulfillment connect. We identify weak handoffs and plan improvements that fit your operation.',
+    tags: ['Demand planning', 'Inventory flow', 'Fulfillment'],
+    context:
+      'Supply chains cross organizational boundaries. Better performance depends on shared definitions, reliable handoffs, and an honest view of capacity and variability.',
+    challenges: [
+      'Stockouts alongside slow-moving inventory',
+      'Demand plans that do not match purchasing or capacity',
+      'Supplier delays discovered too late',
+      'Limited visibility from order to delivery',
+    ],
+    capabilities: [
+      {
+        title: 'Demand and supply planning',
+        text: 'Connect assumptions with purchasing and operational capacity.',
+        items: ['Forecast process review', 'Planning cadence and ownership', 'Capacity and constraint assessment', 'Scenario planning'],
+      },
+      {
+        title: 'Supplier and procurement processes',
+        text: 'Make commitments, lead times, and exceptions easier to manage.',
+        items: ['Supplier performance measures', 'Procurement workflow review', 'Lead-time and risk mapping', 'Escalation responsibilities'],
+      },
+      {
+        title: 'Inventory management',
+        text: 'Balance availability with the cost and complexity of stock.',
+        items: ['Inventory segmentation', 'Replenishment rules', 'Stock accuracy assessment', 'Slow-moving and shortage analysis'],
+      },
+      {
+        title: 'Warehousing and fulfillment',
+        text: 'Follow orders through the handoffs that affect service.',
+        items: ['Receiving and picking processes', 'Warehouse flow assessment', 'Order fulfillment measures', 'Exception and returns handling'],
+      },
+      {
+        title: 'Operational visibility',
+        text: 'Define useful measures across the full chain.',
+        items: ['End-to-end process mapping', 'Service and lead-time baselines', 'Cross-team review routines', 'Improvement roadmap'],
+      },
+    ],
+    outcomes: [
+      'A shared picture of supply chain constraints and handoffs',
+      'Prioritized improvements to planning and fulfillment',
+      'Clearer measures for availability, lead time, and service',
+    ],
+    faq: [
+      [
+        'Is this only for manufacturers or consumer goods businesses?',
+        'No. The scope can cover any organization coordinating suppliers, stock, fulfillment, or service delivery. We shape the assessment around your operating model.',
+      ],
+      [
+        'Do you recommend software immediately?',
+        'We first trace processes and information gaps. A system may help, but clearer rules, ownership, or supplier communication can be a better first step.',
+      ],
+      [
+        'What information is useful for an initial review?',
+        'Order and inventory records, supplier lead times, service exceptions, and process documentation help. We agree what is available and practical before defining the scope.',
+      ],
+    ],
+  },
 ] as const;
 export type Service = (typeof services)[number];
 export const servicePath = (s: Pick<Service, 'slug'>) => `/services/${s.slug}`;
+export const industryServices = services.slice(0, 5);

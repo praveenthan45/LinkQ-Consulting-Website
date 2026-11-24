@@ -5,6 +5,8 @@ export const industries = [
   'FMCG',
   'Education',
   'Technology & Automation',
+  'Investment & Real Estate',
+  'Business Strategy',
   'Other',
 ] as const;
 export const serviceOptions = [
@@ -13,7 +15,11 @@ export const serviceOptions = [
   'FMCG Consulting',
   'Education Consulting',
   'Technology & Automation Consulting',
+  'Business Strategy Consulting',
+  'Data Analytics & AI Consulting',
+  'Supply Chain & Operations Consulting',
   'General Business Enquiry',
+  'Collaboration Consulting',
 ] as const;
 const clean = (min: number, max: number, label: string) =>
   z

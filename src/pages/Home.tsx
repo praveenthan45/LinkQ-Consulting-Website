@@ -1,48 +1,54 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Check, Target, Network, SlidersHorizontal, Sprout } from 'lucide-react';
+import { Plus, Check, Target, Network, SlidersHorizontal, Sprout, ArrowRight } from 'lucide-react';
 import { Hero21 } from '../components/Hero21';
-import { SectionTitle, Process, InsightCard, Photo } from '../components/Common';
+import { SectionTitle, InsightCard, Photo } from '../components/Common';
 import { DepthImage, PerspectiveStack, Reveal } from '../components/Motion';
 import { CTA } from '../components/Layout';
 import { insights } from '../content/insights';
-import { services, servicePath } from '../content/services';
+import { industries } from '../content/industries';
+
+const homeIndustryPhotos = [
+  { slug: 'manufacturing-industrial', label: 'Manufacturing', name: 'home-manufacturing', alt: 'Manufacturing team reviewing equipment on the factory floor' },
+  { slug: 'fmcg-consumer-goods', label: 'Consumer Goods', name: 'home-fmcg', alt: 'Stocked grocery aisles in a retail store' },
+  { slug: 'education', label: 'Education', name: 'collaborative-learning', alt: 'Learners collaborating around a laptop' },
+];
 
 export function Home() {
-  const [active, setActive] = useState(0);
   return (
     <>
       <div className="home-landing">
         <Hero21 />
-        <nav className="industry-strip" aria-label="Consulting expertise">
+        <nav className="industry-strip" aria-label="Industries">
           <div className="container">
-            {services.map((s) => (
-              <Link to={servicePath(s)} key={s.slug}>
-                <s.icon size={21} />
-                <span>{s.name.replace(' Consulting', '')}</span>
+            {industries.slice(0, 5).map((industry) => (
+              <Link to={`/industries/${industry.slug}`} key={industry.slug}>
+                <industry.icon size={21} />
+                <span>{industry.shortName}</span>
               </Link>
             ))}
+            <Link to="/industries" className="strip-view-all">
+              <span>View all</span>
+              <ArrowRight size={16} />
+            </Link>
           </div>
         </nav>
       </div>
       <section className="section container introduction">
         <Reveal>
-          <span className="eyebrow">BUSINESS IS CONNECTED. YOUR ADVICE SHOULD BE, TOO.</span>
+          <span className="eyebrow">LOCAL STRENGTH. GLOBAL POSSIBILITIES.</span>
           <div className="intro-grid">
             <h2>
-              A wider perspective.
-              <br />A more practical
+              A stronger business case.
+              <br />A more connected
               <br />
               <em>way forward.</em>
             </h2>
             <div>
               <p className="lead-paragraph">
-                Technology, operations, and people shape the same business. We look at them
-                together.
+                A capable local business needs more than an introduction to work globally. It needs a clear offer, credible evidence, and a partner that fits.
               </p>
               <p>
-                We assess what is holding work back, clarify your options, and build a practical
-                improvement plan around your priorities.
+                We study your business, review readiness and certification needs, then help plan suitable industry connections and the work that follows.
               </p>
               <Link to="/about" className="text-link">
                 Get to know LinkqGlobal
@@ -52,70 +58,22 @@ export function Home() {
           </div>
         </Reveal>
       </section>
-      <section className="section expertise-section">
-        <div className="container">
-          <Reveal>
-            <SectionTitle
-              eyebrow="OUR CONSULTING SERVICES"
-              title={
-                <>
-                  Expertise for the
-                  <br />
-                  decisions ahead.
-                </>
-              }
-              link={{ to: '/services', label: 'Explore services' }}
-            >
-              Five areas of focus. One commitment to understanding how your business works.
-            </SectionTitle>
-          </Reveal>
-          <div className="expertise-explorer">
-            <div className="expertise-links">
-              {services.map((s, index) => (
-                <Link
-                  key={s.slug}
-                  to={servicePath(s)}
-                  className={`expertise-row ${active === index ? 'is-active' : ''}`}
-                  onMouseEnter={() => setActive(index)}
-                  onFocus={() => setActive(index)}
-                >
-                  <s.icon size={25} />
-                  <div>
-                    <h3>{s.name.replace(' Consulting', '')}</h3>
-                    <p>{s.description}</p>
-                  </div>
-                  <Plus size={20} />
-                </Link>
-              ))}
-            </div>
-            <div className="expertise-preview">
-              <DepthImage name={services[active].image} alt={services[active].alt} />
-              <div className="expertise-preview-caption">
-                <span className="eyebrow">A FOCUSED BUSINESS PERSPECTIVE</span>
-                <h3>{services[active].headline}</h3>
-                <span>{services[active].tags.join(' / ')}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
       <section className="section container connected-section">
         <div className="connected-copy">
           <Reveal>
             <span className="eyebrow">SEE THE CONNECTIONS THAT MATTER</span>
             <h2>
-              One organization.
+              One business.
               <br />
-              Many moving parts.
+              A wider market.
               <br />
-              <em>A shared direction.</em>
+              <em>The right connection.</em>
             </h2>
             <p>
-              We connect your processes, systems, and people to recommend changes that work
-              together.
+              We bring your goals, evidence, and operating capacity together before approaching a potential global partner.
             </p>
-            <Link to="/approach" className="text-link">
-              How our approach works
+            <Link to="/collaboration" className="text-link">
+              Explore the collaboration journey
               <span className="link-line" />
             </Link>
           </Reveal>
@@ -127,32 +85,32 @@ export function Home() {
           <Reveal>
             <SectionTitle
               eyebrow="WHERE WE CAN HELP"
-              title="Start with the challenge you need to solve."
+              title="Build the case for your next connection."
             >
-              A clear definition of the problem is the foundation for a useful engagement.
+              Each step prepares your business for a more useful partner conversation.
             </SectionTitle>
           </Reveal>
           <div className="challenge-grid">
             {[
               {
                 icon: Target,
-                title: 'Operational improvement',
-                text: 'Understand bottlenecks, recurring exceptions, and the handoffs that slow work down.',
+                title: 'Business case',
+                text: 'Explain your offer, market opportunity, capacity, and the value a partner could bring.',
               },
               {
                 icon: Network,
-                title: 'Technology decisions',
-                text: 'Assess systems and investments against your operational priorities and available capacity.',
+                title: 'Verification readiness',
+                text: 'Review business records, product claims, and the evidence a partner or market may require.',
               },
               {
                 icon: SlidersHorizontal,
-                title: 'Process visibility',
-                text: 'Define the information, ownership, and review routines that support better decisions.',
+                title: 'Partner fit',
+                text: 'Identify the type of industry organization that matches your goals and operating reality.',
               },
               {
                 icon: Sprout,
-                title: 'Organizational change',
-                text: 'Plan manageable changes with clear responsibilities and support for the people involved.',
+                title: 'Tie-up support',
+                text: 'Shape the first discussions, agreed responsibilities, pilot steps, and review points.',
               },
             ].map((item) => (
               <Reveal key={item.title}>
@@ -164,19 +122,6 @@ export function Home() {
           </div>
         </div>
       </section>
-      <section className="section container approach-home">
-        <Reveal>
-          <SectionTitle
-            eyebrow="FROM UNDERSTANDING TO ACTION"
-            title="A considered process. A practical plan."
-            link={{ to: '/approach', label: 'Explore our methodology' }}
-          >
-            Every engagement starts with listening and develops around the decisions you need to
-            make.
-          </SectionTitle>
-          <Process />
-        </Reveal>
-      </section>
       <section className="commitment-section">
         <div className="container commitment-grid">
           <DepthImage
@@ -187,21 +132,19 @@ export function Home() {
           <Reveal>
             <span className="eyebrow">WORKING WITH LINKQGLOBAL</span>
             <h2>
-              Your business context
+              Your business readiness
               <br />
-              sets the direction.
+              shapes the connection.
             </h2>
             <p>
-              We take time to understand what matters to your organization. Recommendations should
-              make their reasoning clear, account for real constraints, and describe an achievable
-              next step.
+              We begin with what your team can deliver today. A sound collaboration plan makes the opportunity, evidence, constraints, and next decisions clear to both sides.
             </p>
             <ul className="commitment-list">
               {[
-                'Business priorities before technology choices',
-                'Cross-functional thinking and open discussion',
-                'Clearly defined scope and responsibilities',
-                'Practical plans with meaningful review points',
+                'A business case grounded in your current capacity',
+                'Verification and certification needs identified early',
+                'Partner criteria agreed before outreach',
+                'Clear responsibilities for a pilot or tie-up',
               ].map((item) => (
                 <li key={item}>
                   <Check size={17} />
@@ -209,8 +152,8 @@ export function Home() {
                 </li>
               ))}
             </ul>
-            <Link to="/about" className="text-link">
-              Our consulting philosophy
+            <Link to="/collaboration" className="text-link">
+              How we support collaboration
               <span className="link-line" />
             </Link>
           </Reveal>
@@ -225,11 +168,11 @@ export function Home() {
           Different operating environments call for different questions.
         </SectionTitle>
         <div className="industry-photogrid">
-          {services.slice(1, 4).map((s) => (
-            <Link to={`/industries#${s.slug}`} key={s.slug}>
-              <Photo name={s.image} alt={s.alt} />
+          {homeIndustryPhotos.map((industry) => (
+            <Link to={`/industries/${industry.slug}`} key={industry.slug}>
+              <Photo name={industry.name} alt={industry.alt} />
               <div>
-                <span>{s.shortName}</span>
+                <span>{industry.label}</span>
                 <Plus size={19} />
               </div>
             </Link>
