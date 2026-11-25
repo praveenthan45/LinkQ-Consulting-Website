@@ -1622,31 +1622,6 @@ main:focus {
 .industry-detail > #digital-transformation {
   padding-block-start: clamp(24px, 4vw, 52px);
 }
-.expert-profile-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
-  gap: clamp(16px, 2.4vw, 30px);
-  max-width: 960px;
-}
-.expert-profile {
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: #fff;
-}
-.expert-profile picture {
-  aspect-ratio: 16 / 9;
-}
-.expert-profile-copy {
-  padding: 20px 22px;
-}
-.expert-profile-copy h3 {
-  font-size: 1.2rem;
-}
-.expert-profile-copy p {
-  margin-top: 6px;
-  color: var(--muted);
-}
 .industry-detail-card-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
