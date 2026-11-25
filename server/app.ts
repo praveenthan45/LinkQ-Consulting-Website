@@ -70,6 +70,10 @@ export function createApp({
         .digest('hex'),
     message: { message: 'Too many enquiries. Please wait before trying again.' },
   });
+  function createReferenceNumber() {
+    return `LQ-${new Date().getUTCFullYear()}-${randomBytes(4).toString('hex').toUpperCase()}`;
+  }
+
   app.post('/api/enquiries', limiter, async (req, res) => {
     if (!req.is('application/json'))
       return res.status(415).json({ message: 'Send JSON data to this endpoint.' });
@@ -90,19 +94,29 @@ export function createApp({
     try {
       const previous = await db.enquiry.findUnique({
         where: { idempotencyKey },
-        select: { contentHash: true },
+        select: { contentHash: true, referenceNumber: true },
       });
       if (previous) {
         if (previous.contentHash !== contentHash)
           return res
             .status(409)
             .json({ message: 'This submission key was already used for different information.' });
-        return res.status(200).json({ message: 'Your enquiry has been recorded.' });
+        return res.status(200).json({
+          message: 'Your inquiry has been recorded.',
+          referenceNumber: previous.referenceNumber,
+        });
       }
       const enquiry = await db.enquiry.create({
         data: {
           ...data,
+          referenceNumber: createReferenceNumber(),
           phoneNumber: data.phoneNumber || null,
+          industryOther: data.industryOther || null,
+          collaborationObjective: data.collaborationObjective || null,
+          collaborationObjectiveOther: data.collaborationObjectiveOther || null,
+          targetCountryRegion: data.targetCountryRegion || null,
+          partnerType: data.partnerType || null,
+          partnerTypeOther: data.partnerTypeOther || null,
           consentTimestamp: new Date(),
           idempotencyKey,
           contentHash,
@@ -125,19 +139,28 @@ export function createApp({
               console.warn('notification_status_update_failed');
             }
           });
-      return res.status(201).json({ message: 'Your enquiry has been recorded.' });
+      return res.status(201).json({
+        message: 'Your inquiry has been recorded.',
+        referenceNumber: enquiry.referenceNumber,
+      });
     } catch (error) {
       if (error && typeof error === 'object' && 'code' in error && error.code === 'P2002') {
         const previous = await db.enquiry
-          .findUnique({ where: { idempotencyKey }, select: { contentHash: true } })
+          .findUnique({
+            where: { idempotencyKey },
+            select: { contentHash: true, referenceNumber: true },
+          })
           .catch(() => null);
         if (previous?.contentHash === contentHash)
-          return res.status(200).json({ message: 'Your enquiry has been recorded.' });
+          return res.status(200).json({
+            message: 'Your inquiry has been recorded.',
+            referenceNumber: previous.referenceNumber,
+          });
         return res.status(409).json({ message: 'This submission key was already used.' });
       }
       console.warn('enquiry_storage_failed');
       return res.status(503).json({
-        message: 'The enquiry service is temporarily unavailable. Please try again later.',
+        message: 'The inquiry service is temporarily unavailable. Please try again later.',
       });
     }
   });

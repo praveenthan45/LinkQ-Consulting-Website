@@ -95,6 +95,14 @@ These locally stored WebP photographs come from Pexels and are used as illustrat
 - Business Strategy practice card: https://www.pexels.com/photo/9034238/
 - Business Strategy practice cover: https://www.pexels.com/photo/7433898/
 
+### Collaboration journey imagery
+
+Editorial photographs for the collaboration hero and the six collaboration journey steps (`public/images/collab-hero*.webp` and `public/images/collab-step-1*.webp` through `collab-step-6*.webp`) were generated locally using the built-in image generation tool and converted to responsive 1200x800 and 640x427 WebP derivatives. Pictured individuals are illustrative only and do not represent LinkqGlobal staff, clients, or partners.
+
+### Homepage world map
+
+The dotted continents use [Natural Earth public-domain land polygons](https://www.naturalearthdata.com/downloads/110m-physical-vectors/110m-land/). The connection routes are illustrative.
+
 ### Font and icon licenses
 
 Manrope and Inter variable fonts are copied from the `@fontsource-variable` packages and served locally. Both use the SIL Open Font License; copies are kept in `public/fonts/`. Lucide icons are provided by `lucide-react` under the ISC license. Runtime packages retain their license notices in `node_modules`.

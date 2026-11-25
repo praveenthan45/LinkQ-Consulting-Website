@@ -33,8 +33,8 @@ const titles: Record<string, [string, string]> = {
     'Explore industry-specific consulting that prepares local businesses for credible global collaboration.',
   ],
   '/collaboration': [
-    'Global collaboration consulting',
-    'LinkqGlobal helps small businesses and startups build a business case, prepare verification and certification evidence, identify global industry partners, and plan a collaboration.',
+    'Global collaboration journey',
+    'Connecting local businesses to global opportunities through partner discovery, market entry planning, negotiation facilitation, verification support, partner alignment, and delivery coordination.',
   ],
   '/insights': [
     'Ideas & perspectives',
@@ -77,7 +77,7 @@ export function getPageMeta(path: string) {
   return {
     title: `${entry[0]} | LinkqGlobal Consulting`,
     description: entry[1],
-    image: `${siteUrl}/images/${s?.coverImage || ind?.heroImage || ind?.image || a?.image || 'hero'}.webp`,
+    image: `${siteUrl}/images/${s?.coverImage || ind?.heroImage || ind?.image || a?.image || (path === '/collaboration' ? 'collab-hero' : 'hero')}.webp`,
     canonical: siteUrl ? `${siteUrl}${path}` : '',
     noindex: !siteUrl || !staticRoutes.includes(path),
     service: s,

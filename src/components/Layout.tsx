@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
-import { ArrowRight, ArrowUp, ChevronDown, Menu, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react';
 import { LayoutGroup, motion, useReducedMotion } from 'motion/react';
 import { services, servicePath } from '../content/services';
 import { industries } from '../content/industries';
+import { collaborationSteps } from '../content/collaboration';
 import { SEOManager } from './SEO';
 import { Reveal, ScrollProgress } from './Motion';
 
@@ -13,6 +14,14 @@ export function Logo({ light = false, adaptive = false }: { light?: boolean; ada
       to="/"
       className={`logo ${light ? 'logo-light' : ''}`}
       aria-label="LinkqGlobal Consulting home"
+      onClick={(event) => {
+        if (window.location.pathname !== '/') return;
+        event.preventDefault();
+        window.scrollTo({
+          top: 0,
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        });
+      }}
     >
       <span className="brand-lockup" aria-hidden="true">
         <img
@@ -61,6 +70,8 @@ export function Layout() {
   const [focusedNav, setFocusedNav] = useState<string | null>(null);
   const reducedMotion = useReducedMotion();
   const location = useLocation();
+  const initialLocation = useRef(location);
+  const scrollStorageKey = `linkq:scroll:${location.pathname}${location.search}${location.hash}`;
 
   const selectedService = services.find((service) => location.pathname === servicePath(service));
   const consultationUrl = selectedService
@@ -89,6 +100,13 @@ export function Layout() {
     window.clearTimeout(industriesCloseTimer.current);
   }
 
+  function closeAllMenus() {
+    cancelDropdownClose();
+    setIndustriesDropdown(false);
+    setCollaborationDropdown(false);
+    setMobile(false);
+  }
+
   function underline(to: string) {
     return underlineTarget === to ? (
       <motion.span
@@ -109,12 +127,45 @@ export function Layout() {
     setCompactHeader(false);
     setHoveredNav(null);
     setFocusedNav(null);
+    const navigation = performance.getEntriesByType?.('navigation')[0] as
+      | PerformanceNavigationTiming
+      | undefined;
+    if (location === initialLocation.current && navigation?.type === 'reload') {
+      try {
+        const savedPosition = window.sessionStorage.getItem(scrollStorageKey);
+        if (savedPosition !== null) {
+          const top = Number(savedPosition);
+          if (Number.isFinite(top) && top >= 0) {
+            const frame = requestAnimationFrame(() => window.scrollTo({ top, behavior: 'instant' }));
+            return () => cancelAnimationFrame(frame);
+          }
+        }
+      } catch {
+        // Leave refresh restoration to the browser when storage is unavailable.
+      }
+      return;
+    }
+
     if (location.hash) {
-      requestAnimationFrame(() =>
+      const frame = requestAnimationFrame(() =>
         document.getElementById(decodeURIComponent(location.hash.slice(1)))?.scrollIntoView(),
       );
-    } else window.scrollTo({ top: 0, behavior: 'instant' });
+      return () => cancelAnimationFrame(frame);
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, [location.pathname, location.hash]);
+
+  useEffect(() => {
+    function saveScrollPosition() {
+      try {
+        window.sessionStorage.setItem(scrollStorageKey, String(window.scrollY));
+      } catch {
+        // Native browser restoration still works when storage is blocked.
+      }
+    }
+    window.addEventListener('pagehide', saveScrollPosition);
+    return () => window.removeEventListener('pagehide', saveScrollPosition);
+  }, [scrollStorageKey]);
 
   useEffect(() => {
     return () => {
@@ -176,7 +227,15 @@ export function Layout() {
             aria-label={mobile ? 'Close navigation' : 'Open navigation'}
             aria-expanded={mobile}
             aria-controls="main-navigation"
-            onClick={() => setMobile(!mobile)}
+            onClick={() => {
+              const next = !mobile;
+              setMobile(next);
+              if (!next) {
+                cancelDropdownClose();
+                setIndustriesDropdown(false);
+                setCollaborationDropdown(false);
+              }
+            }}
           >
             {mobile ? <X /> : <Menu />}
           </button>
@@ -208,7 +267,12 @@ export function Layout() {
                     if (target !== '/collaboration') setCollaborationDropdown(false);
                   }
                 }}
-                onPointerLeave={() => {
+                onPointerLeave={(event) => {
+                  if (
+                    event.pointerType !== 'mouse' ||
+                    !window.matchMedia(desktopHoverQuery).matches
+                  )
+                    return;
                   setHoveredNav(null);
                   cancelDropdownClose();
                   industriesCloseTimer.current = window.setTimeout(() => {
@@ -224,6 +288,7 @@ export function Layout() {
                   if (item) setFocusedNav(item.dataset.navTarget ?? null);
                 }}
                 onBlurCapture={(event) => {
+                  if (window.matchMedia('(max-width: 1023px)').matches) return;
                   if (!event.currentTarget.contains(event.relatedTarget)) {
                     setFocusedNav(null);
                     setIndustriesDropdown(false);
@@ -232,7 +297,7 @@ export function Layout() {
                 }}
               >
                 {location.pathname !== '/' && (
-                  <NavLink to="/" end data-nav-target="/">
+                  <NavLink to="/" end data-nav-target="/" onClick={closeAllMenus}>
                     Home
                     {underline('/')}
                   </NavLink>
@@ -265,6 +330,7 @@ export function Layout() {
                     }, 220);
                   }}
                   onBlur={(event) => {
+                    if (window.matchMedia('(max-width: 1023px)').matches) return;
                     if (!event.currentTarget.contains(event.relatedTarget)) {
                       cancelDropdownClose();
                       setIndustriesDropdown(false);
@@ -274,9 +340,16 @@ export function Layout() {
                   <NavLink
                     to="/industries"
                     className={`nav-service ${location.pathname.startsWith('/industries') || location.pathname.startsWith('/services/') ? 'active' : ''}`}
-                    onClick={() => {
-                      setIndustriesDropdown(false);
-                      setMobile(false);
+                    aria-expanded={industriesDropdown}
+                    aria-controls="industries-dropdown"
+                    onClick={(event) => {
+                      if (window.matchMedia('(max-width: 1023px)').matches) {
+                        event.preventDefault();
+                        setCollaborationDropdown(false);
+                        setIndustriesDropdown((open) => !open);
+                        return;
+                      }
+                      closeAllMenus();
                     }}
                   >
                     Industry <ChevronDown size={13} className={industriesDropdown ? 'rotated' : ''} />
@@ -287,13 +360,13 @@ export function Layout() {
                       <div className="industry-menu-content">
                         <h2>Industry</h2>
                         <div className="industry-menu-links">
-                          {industries.slice(0, 6).map((ind) => (
-                            <Link key={ind.slug} to={`/industries/${ind.slug}`} onClick={() => setIndustriesDropdown(false)}>
+                          {industries.map((ind) => (
+                            <Link key={ind.slug} to={`/industries/${ind.slug}`} onClick={closeAllMenus}>
                               <ind.icon size={19} />
                               <span>{ind.name}</span>
                             </Link>
                           ))}
-                          <Link className="industry-menu-view-all" to="/industries" onClick={() => setIndustriesDropdown(false)}>
+                          <Link className="industry-menu-view-all" to="/industries" onClick={closeAllMenus}>
                             View all <ArrowRight size={14} aria-hidden="true" />
                           </Link>
                         </div>
@@ -319,6 +392,7 @@ export function Layout() {
                     }, 220);
                   }}
                   onBlur={(event) => {
+                    if (window.matchMedia('(max-width: 1023px)').matches) return;
                     if (!event.currentTarget.contains(event.relatedTarget)) setCollaborationDropdown(false);
                   }}
                 >
@@ -328,44 +402,60 @@ export function Layout() {
                     aria-expanded={collaborationDropdown}
                     aria-controls="collaboration-dropdown"
                     onClick={(event) => {
-                      if (window.matchMedia('(max-width: 1023px)').matches && !collaborationDropdown) {
+                      if (window.matchMedia('(max-width: 1023px)').matches) {
                         event.preventDefault();
-                        setCollaborationDropdown(true);
+                        setIndustriesDropdown(false);
+                        setCollaborationDropdown((open) => !open);
                         return;
                       }
-                      setCollaborationDropdown(false);
-                      setMobile(false);
+                      closeAllMenus();
                     }}
                   >
                     Collaboration <ChevronDown size={13} className={collaborationDropdown ? 'rotated' : ''} />
                     {underline('/collaboration')}
                   </NavLink>
                   {collaborationDropdown && (
-                    <div ref={collaborationPanel} className="mega-menu collaboration-menu" id="collaboration-dropdown">
-                      <span className="eyebrow">COLLABORATION JOURNEY</span>
-                      <Link to="/collaboration#case-study" onClick={() => setCollaborationDropdown(false)}>Business case study</Link>
-                      <Link to="/collaboration#verification" onClick={() => setCollaborationDropdown(false)}>Verification & certification</Link>
-                      <Link to="/collaboration#partner-matching" onClick={() => setCollaborationDropdown(false)}>Global partner alignment</Link>
-                      <Link to="/collaboration#tie-up" onClick={() => setCollaborationDropdown(false)}>Tie-up & delivery support</Link>
-                      <Link className="collaboration-menu-cta" to="/contact?service=Collaboration%20Consulting" onClick={() => setCollaborationDropdown(false)}>Book a consultation <ArrowRight size={15} /></Link>
+                    <div ref={collaborationPanel} className="mega-menu" id="collaboration-dropdown">
+                      <div className="industry-menu-content">
+                        <h2>Collaboration</h2>
+                        <div className="industry-menu-links">
+                          {collaborationSteps.map((step) => (
+                            <Link
+                              key={step.id}
+                              to={`/collaboration#${step.id}`}
+                              onClick={closeAllMenus}
+                            >
+                              <step.icon size={19} aria-hidden="true" />
+                              <span>{step.navLabel}</span>
+                            </Link>
+                          ))}
+                          <Link
+                            className="industry-menu-view-all"
+                            to="/collaboration"
+                            onClick={closeAllMenus}
+                          >
+                            View all <ArrowRight size={14} aria-hidden="true" />
+                          </Link>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
 
-                <NavLink to="/insights" data-nav-target="/insights">
+                <NavLink to="/insights" data-nav-target="/insights" onClick={closeAllMenus}>
                   Insights
                   {underline('/insights')}
                 </NavLink>
 
                 {navLinksAfterDropdowns.map(([to, label]) => (
-                  <NavLink key={to} to={to} data-nav-target={to}>
+                  <NavLink key={to} to={to} data-nav-target={to} onClick={closeAllMenus}>
                     {label}
                     {underline(to)}
                   </NavLink>
                 ))}
               </div>
             </LayoutGroup>
-            <Link to={consultationUrl} className="button nav-cta">
+            <Link to={consultationUrl} className="button nav-cta" onClick={closeAllMenus}>
               Book a consultation
             </Link>
           </nav>
@@ -418,60 +508,55 @@ export function CTA({
 }
 
 export function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
-    });
-  };
   return (
     <footer className="site-footer">
-      <div className="container footer-grid">
-        <Reveal className="footer-brand">
-          <Logo light />
-          <p>
-            Business-focused collaboration
-            <br />
-            connecting local ambition with global opportunity.
-          </p>
-          <span className="footer-note">A clearer path to the right partner.</span>
-        </Reveal>
-        <Reveal delay={70}>
-          <h3>Industry</h3>
-          {industries.map((ind) => (
-            <Link key={ind.slug} to={`/industries/${ind.slug}`}>
-              {ind.name}
+      <div className="container footer-wrap">
+        <div className="footer-grid">
+          <Reveal className="footer-brand">
+            <Logo light />
+            <p>
+              Business-focused collaboration
+              <br />
+              connecting local ambition with global opportunity.
+            </p>
+            <span className="footer-note">A clearer path to the right partner.</span>
+          </Reveal>
+          <Reveal delay={70}>
+            <h3>Industry</h3>
+            {industries.map((ind) => (
+              <Link key={ind.slug} to={`/industries/${ind.slug}`}>
+                {ind.name}
+              </Link>
+            ))}
+          </Reveal>
+          <Reveal delay={140}>
+            <h3>Explore LinkqGlobal</h3>
+            <Link to="/about">About us</Link>
+            <Link to="/contact">Contact</Link>
+            <div className="footer-legal-links" aria-label="Legal">
+              <Link to="/privacy-policy">Privacy policy</Link>
+              <Link to="/terms-of-use">Terms of use</Link>
+              <Link to="/cookie-policy">Cookie policy</Link>
+            </div>
+          </Reveal>
+          <Reveal className="footer-contact" delay={210}>
+            <h3>Let’s connect</h3>
+            <p>Tell us about your priorities.</p>
+            <Link to="/contact" className="text-link">
+              Book a consultation
             </Link>
-          ))}
-        </Reveal>
-        <Reveal delay={140}>
-          <h3>Explore LinkqGlobal</h3>
-          <Link to="/industries">Industry</Link>
-          <Link to="/insights">Insights</Link>
-          <Link to="/collaboration">Collaboration</Link>
-          <Link to="/about">About us</Link>
-          <Link to="/contact">Contact</Link>
-        </Reveal>
-        <Reveal className="footer-contact" delay={210}>
-          <h3>Let’s connect</h3>
-          <p>Tell us about your priorities.</p>
-          <Link to="/contact" className="text-link">
-            Book a consultation
-          </Link>
-        </Reveal>
-      </div>
-      <Reveal className="container footer-bottom">
-        <span>© {new Date().getFullYear()} LinkqGlobal Consulting · All rights reserved.</span>
-        <div className="footer-legal-links">
-          <Link to="/privacy-policy">Privacy policy</Link>
-          <Link to="/terms-of-use">Terms of use</Link>
-          <Link to="/cookie-policy">Cookie policy</Link>
+          </Reveal>
         </div>
-        <button className="footer-back-to-top" type="button" onClick={scrollToTop} aria-label="Back to top">
-          <span>Back to top</span>
-          <ArrowUp aria-hidden="true" size={15} />
-        </button>
-      </Reveal>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} LinkqGlobal Consulting · All rights reserved.</span>
+          <span className="footer-powered">
+            Powered by{' '}
+            <a href="https://www.gentizeinnovations.com/" target="_blank" rel="noopener noreferrer">
+              Gentize
+            </a>
+          </span>
+        </div>
+      </div>
     </footer>
   );
 }

@@ -4,14 +4,15 @@ import { industries } from '../content/industries';
 import { insights } from '../content/insights';
 import { Breadcrumb, PageHero, SectionTitle, Photo, InsightCard } from '../components/Common';
 import { CTA } from '../components/Layout';
+import { OurExperts } from '../components/OurExperts';
 
 export function Industries() {
   const featuredArticles = insights.slice(0, 3);
 
   return (
     <>
-      <Breadcrumb label="Industry" />
       <PageHero
+        edgeBreadcrumb={<Breadcrumb label="Industry" />}
         eyebrow="INDUSTRY & ADVISORY"
         image="industries-banner"
         alt="Industrial facilities and supply chains supporting global commerce"
@@ -124,6 +125,7 @@ export function Industries() {
         </div>
       </section>
 
+      <OurExperts area="industry" />
       <CTA />
     </>
   );

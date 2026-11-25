@@ -47,8 +47,8 @@ export function Insights() {
 
   return (
     <>
-      <Breadcrumb label="Insights" />
       <PageHero
+        edgeBreadcrumb={<Breadcrumb label="Insights" />}
         eyebrow="IDEAS & PERSPECTIVES"
         image="insights-banner"
         alt="Business intelligence dashboards and performance analysis screens"
@@ -131,7 +131,7 @@ export function Insights() {
               <Link
                 to={`/insights/${featuredArticle.slug}`}
                 className="button"
-                style={{ padding: '8px 18px', fontSize: '0.85rem' }}
+                style={{ paddingBlock: 8, fontSize: '0.85rem' }}
               >
                 Read article
               </Link>

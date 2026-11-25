@@ -82,6 +82,7 @@ export function PageBanner({
   children,
   caption,
   label,
+  edgeBreadcrumb,
 }: {
   image: string;
   alt?: string;
@@ -89,14 +90,20 @@ export function PageBanner({
   children: ReactNode;
   caption?: string;
   label?: string;
+  edgeBreadcrumb?: ReactNode;
 }) {
   return (
-    <section className={`page-banner ${className}`} aria-label={label}>
-      <div className="page-banner-image" aria-hidden="true">
-        <Photo name={image} alt={alt} eager />
+    <section className={`page-banner ${className}${edgeBreadcrumb ? ' page-banner--edge-image' : ''}`} aria-label={label}>
+      <div className="container page-banner-inner">
+        <div className="page-banner-copy">
+          {edgeBreadcrumb}
+          {children}
+        </div>
+        <figure className="page-banner-image">
+          <Photo name={image} alt={alt} eager />
+          {caption && <figcaption className="page-banner-caption">{caption}</figcaption>}
+        </figure>
       </div>
-      <div className="container page-banner-inner">{children}</div>
-      {caption && <div className="container page-banner-caption">{caption}</div>}
     </section>
   );
 }
@@ -107,6 +114,7 @@ export function PageHero({
   image,
   alt,
   className = '',
+  edgeBreadcrumb,
 }: {
   eyebrow: string;
   title: ReactNode;
@@ -114,9 +122,10 @@ export function PageHero({
   image: string;
   alt?: string;
   className?: string;
+  edgeBreadcrumb?: ReactNode;
 }) {
   return (
-    <PageBanner image={image} alt={alt} className={`page-hero ${className}`}>
+    <PageBanner image={image} alt={alt} className={`page-hero ${className}`} edgeBreadcrumb={edgeBreadcrumb}>
       <div className="page-hero-copy">
         <span className="eyebrow">
           <span className="small-line" />

@@ -19,7 +19,7 @@ export interface InsightArticleData {
   relatedArticles: string[];
 }
 
-export const insights: InsightArticleData[] = [
+const rawInsights: InsightArticleData[] = [
   // 1. Industry Trends
   {
     slug: 'future-of-ai-in-manufacturing',
@@ -426,6 +426,45 @@ export const insights: InsightArticleData[] = [
 
   // 5. Case Studies
   {
+    slug: 'business-case-study-global-collaboration',
+    title: 'Business Case Study: Understanding the Business Before Seeking a Global Partner',
+    category: 'Case Studies',
+    image: 'approach-banner',
+    imageAlt: 'Business strategy team organizing commercial priorities and collaboration worksheets',
+    summary:
+      'How to study your product or service, customers, operating capacity, finances, and growth goals to prepare a concise, partner-ready business case before international outreach.',
+    readTime: '5 min read',
+    date: '2026-11-25',
+    sections: [
+      [
+        'Understand the Business Before Seeking a Partner',
+        'Entering an international partnership without a clearly structured business case creates avoidable friction during early partner conversations. Before reaching out to overseas buyers, suppliers, distributors, or strategic allies, local enterprises benefit from studying their offering, customers, operating capacity, unit economics, and growth objectives objectively.',
+      ],
+      [
+        'Reviewing the Business Model and Current Market',
+        'A partner-ready business case articulates what the company produces or delivers, which customer segments already depend on it, and where international collaboration adds mutual value. Clarity around current demand, service levels, and differentiation gives prospective partners an understandable basis to evaluate fit.',
+      ],
+      [
+        'Testing the Opportunity Against Capacity and Costs',
+        'Cross-border collaboration increases demands on production throughput, working capital, compliance readiness, and management attention. Testing proposed volumes and commercial assumptions against real operating capacity, lead times, and cost structures prevents over-commitment and clarifies what operational readiness work is needed first.',
+      ],
+      [
+        'Defining the Global Partner Profile and Working Output',
+        'The working output of a business case study is a concise, evidence-grounded brief summarizing what your business offers, the specific type of global collaborator required, and an honest list of open questions regarding standards, logistics, or commercial responsibilities to address during partnership facilitation.',
+      ],
+    ],
+    keyTakeaways: [
+      'Review your business model, product positioning, and current market demand before initiating partner outreach.',
+      'Test prospective international opportunities rigorously against existing production capacity and unit costs.',
+      'Define the exact global partner profile needed and document open readiness questions early.',
+    ],
+    relatedServices: ['business-strategy', 'manufacturing-consulting', 'supply-chain-operations'],
+    relatedArticles: [
+      'turning-strategy-into-decision-rules',
+      'strategic-planning-sustainable-growth',
+    ],
+  },
+  {
     slug: 'case-study-warehouse-throughput-optimization',
     title: 'Case Study: Optimizing Warehouse Throughput for a National Distributor',
     category: 'Case Studies',
@@ -572,3 +611,7 @@ export const insights: InsightArticleData[] = [
     relatedArticles: ['handoffs-behind-supply-chain-delays', 'building-resilient-supply-chain'],
   },
 ];
+
+export const insights: InsightArticleData[] = [...rawInsights].sort(
+  (a, b) => Date.parse(`${b.date}T00:00:00Z`) - Date.parse(`${a.date}T00:00:00Z`),
+);

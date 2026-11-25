@@ -21,11 +21,9 @@ export function InsightArticle() {
 
   return (
     <>
-      {/* Breadcrumb */}
-      <Breadcrumb label={a.category} parent={{ to: '/insights', label: 'Insights' }} />
-
       {/* 1. Article Title, 2. Category, 3. Hero Image, 4. Introduction */}
       <PageBanner
+        edgeBreadcrumb={<Breadcrumb label={a.category} parent={{ to: '/insights', label: 'Insights' }} />}
         image={a.image}
         alt={a.imageAlt || `${a.category} perspective`}
         className="article-banner"
