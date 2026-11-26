@@ -15,8 +15,8 @@ export { InsightArticle } from './InsightArticle';
 export function About() {
   return (
     <>
-      <Breadcrumb label="About us" />
       <PageHero
+        edgeBreadcrumb={<Breadcrumb label="About us" />}
         eyebrow="MEET LINKQGLOBAL"
         title={
           <>

@@ -238,10 +238,9 @@ describe('Website routes and key interactions', () => {
     expect(screen.getByRole('heading', { name: 'Where we advise and transform.' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Explore Business Strategy consulting/ })).toBeInTheDocument();
   });
-  it('places data analytics and AI advice within the IT industry', () => {
+  it('omits the standalone data analytics and AI section from the IT industry', () => {
     open('/industries/information-technology');
-    expect(screen.getByRole('heading', { name: 'Put dependable data behind better technology decisions.' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Explore Data Analytics & AI consulting' })).toHaveAttribute('href', '/services/data-analytics-ai');
+    expect(screen.queryByRole('heading', { name: 'Put dependable data behind better technology decisions.' })).not.toBeInTheDocument();
   });
   it('preselects Business Strategy consulting focus from Business Strategy page without adding it to Industry options', async () => {
     const user = userEvent.setup();

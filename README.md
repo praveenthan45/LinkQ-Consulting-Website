@@ -60,6 +60,12 @@ The request limiter allows five submissions per 15-minute window and keeps only 
 
 `GET /api/health` checks PostgreSQL connectivity and returns 503 when unavailable. Configure external health monitoring against this endpoint. Keep database access restricted to the API and authorized operators.
 
+## Daily Insights publishing
+
+The Daily Industry Insights workflow runs on GitHub at 8:47 a.m. India time. It checks the U.S. Federal Register for recent updates on manufacturing, logistics, AI, food labeling, and education technology. Each run publishes up to three new source briefings with the official title and original link. With zero new matches, it publishes two clearly labeled AI-generated guidance articles.
+
+Add `OPENAI_API_KEY` as a GitHub Actions repository secret to enable the fallback. The workflow commits verified content to `main`, so the repository must allow the workflow token to push. For Render publishing, connect the GitHub repo and select **On Commit** under Auto-Deploy. Run **Daily Industry Insights → Run workflow** in GitHub Actions to verify the first live run. Use `npx tsx scripts/publish-insights.ts --dry-run` for a local preview without writing posts.
+
 ## Linux VPS deployment
 
 This repository targets the Node/Express + PostgreSQL + Nginx VPS architecture specified in the brief. It is not published to a static-only host: that would leave the enquiry system disconnected.

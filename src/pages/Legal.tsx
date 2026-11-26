@@ -33,7 +33,7 @@ const policies = {
       ],
       [
         'Cookies and external resources',
-        'This implementation does not install analytics, advertising, or tracking cookies. Fonts and photographs are served locally. The cookie policy describes the current implementation.',
+        'This implementation does not install analytics, advertising, or tracking cookies. Fonts and photographs are served locally.',
       ],
       [
         'Changes to this notice',
@@ -77,43 +77,15 @@ const policies = {
       ],
     ],
   },
-  '/cookie-policy': {
-    name: 'Cookie policy',
-    description: 'A simple explanation of the website’s current cookie use.',
-    image: 'software-engineering',
-    imageAlt: 'Website software and browser technology',
-    sections: [
-      [
-        'Current implementation',
-        'This website does not set analytics, advertising, or tracking cookies. It does not use third-party analytics tools, embedded videos, maps, or social media widgets. Photographs and fonts are served from the website’s own assets.',
-      ],
-      [
-        'Enquiry form and navigation',
-        'The enquiry form sends information to the website API when you submit it. A submission key is held in page memory to help prevent duplicate records during retries. It is not stored in a cookie or in browser local storage. Navigation and insight filters also operate without cookies.',
-      ],
-      [
-        'Hosting infrastructure',
-        'The hosting provider or reverse proxy may use technical protections that affect cookies or logs. The business must verify the final hosting configuration and update this notice to reflect any such behavior before launch.',
-      ],
-      [
-        'If the website changes',
-        'Adding analytics, advertising, third-party embeds, or other nonessential technologies requires a fresh assessment of notice and consent requirements for the operating jurisdictions. A cookie banner has not been added to this implementation because it does not set nonessential cookies.',
-      ],
-      [
-        'Questions',
-        'Use the contact form for questions about this implementation. The final policy should include the approved business contact and be reviewed whenever website functionality changes.',
-      ],
-    ],
-  },
 } as const;
 export function Legal() {
   const { pathname } = useLocation();
-  const policy = policies[pathname as keyof typeof policies];
+  const policy = policies[pathname.replace(/\/$/, '') as keyof typeof policies];
   if (!policy) return null;
   return (
     <>
-      <Breadcrumb label={policy.name} />
       <PageHero
+        edgeBreadcrumb={<Breadcrumb label={policy.name} />}
         eyebrow="WEBSITE INFORMATION"
         image={policy.image}
         alt={policy.imageAlt}

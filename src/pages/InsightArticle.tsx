@@ -42,12 +42,21 @@ export function InsightArticle() {
               }).format(new Date(`${a.date}T00:00:00Z`))}
             </time>{' '}
             · {a.readTime}
+            {a.source && ' · Source briefing'}
+            {a.aiGenerated && ' · AI-generated guidance'}
           </div>
         </div>
       </PageBanner>
 
       {/* Main Article Content & 5. Structured Headings */}
       <article className="container article" aria-labelledby="insight-title">
+        {a.source && (
+          <p>
+            Published by {a.source.publisher} on <time dateTime={a.source.date}>{a.source.date}</time>.
+            {' '}<a href={a.source.url}>Read the original source</a>
+          </p>
+        )}
+        {a.aiGenerated && <p>This AI-generated article covers general industry practices.</p>}
         {a.sections.map(([title, text]) => (
           <section key={title}>
             <h2>{title}</h2>

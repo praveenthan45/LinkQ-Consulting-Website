@@ -557,8 +557,8 @@ export function Contact() {
 
   return (
     <>
-      <Breadcrumb label="Contact" />
       <PageHero
+        edgeBreadcrumb={<Breadcrumb label="Contact" />}
         eyebrow="LET’S START A CONVERSATION"
         image="contact-banner"
         alt="Two business professionals discussing a consulting enquiry"

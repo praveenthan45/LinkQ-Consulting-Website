@@ -1,3 +1,5 @@
+import dailyInsights from './dailyInsights.json';
+
 export interface InsightArticleData {
   slug: string;
   title: string;
@@ -17,6 +19,8 @@ export interface InsightArticleData {
   keyTakeaways: string[];
   relatedServices: string[];
   relatedArticles: string[];
+  source?: { publisher: string; url: string; date: string };
+  aiGenerated?: boolean;
 }
 
 const rawInsights: InsightArticleData[] = [
@@ -612,6 +616,9 @@ const rawInsights: InsightArticleData[] = [
   },
 ];
 
-export const insights: InsightArticleData[] = [...rawInsights].sort(
+export const insights: InsightArticleData[] = [
+  ...(dailyInsights as InsightArticleData[]),
+  ...rawInsights,
+].sort(
   (a, b) => Date.parse(`${b.date}T00:00:00Z`) - Date.parse(`${a.date}T00:00:00Z`),
 );

@@ -26,10 +26,6 @@ export function IndustryDetailPage() {
     (service) => ind.relevantServices.includes(service.slug) &&
       !(ind.slug === 'information-technology' && service.slug === 'data-analytics-ai'),
   );
-  const dataAiService = ind.slug === 'information-technology'
-    ? services.find((service) => service.slug === 'data-analytics-ai')
-    : undefined;
-
   // Find relevant mapped insights
   const mappedInsights = insights.filter((a) => ind.relevantInsights.includes(a.slug));
 
@@ -178,29 +174,6 @@ export function IndustryDetailPage() {
           ))}
         </div>
       </section>
-
-      {dataAiService && (
-        <section className="section soft-section" id="data-ai">
-          <div className="container">
-            <SectionTitle
-              eyebrow="DATA ANALYTICS & AI"
-              title="Put dependable data behind better technology decisions."
-              link={{ to: servicePath(dataAiService), label: 'Explore Data Analytics & AI consulting' }}
-            >
-              Start with the decision to improve. We assess data quality, shape useful reporting, and test AI ideas with clear evaluation and human oversight.
-            </SectionTitle>
-            <div className="values-grid" style={{ marginTop: 35 }}>
-              {dataAiService.capabilities.slice(0, 3).map((capability) => (
-                <div className="value-card" key={capability.title}>
-                  <dataAiService.icon size={26} color="var(--accent)" />
-                  <h3>{capability.title}</h3>
-                  <p>{capability.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* 5. Consulting disciplines applied to this industry */}
       <section className="section soft-section" id="relevant-services">

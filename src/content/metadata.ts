@@ -13,7 +13,6 @@ export const staticRoutes = [
   '/contact',
   '/privacy-policy',
   '/terms-of-use',
-  '/cookie-policy',
   ...services.map((s) => `/services/${s.slug}`),
   ...industries.map((i) => `/industries/${i.slug}`),
   ...insights.map((a) => `/insights/${a.slug}`),
@@ -51,10 +50,6 @@ const titles: Record<string, [string, string]> = {
   '/terms-of-use': [
     'Terms of use',
     'Draft terms for using the LinkqGlobal Consulting website, educational content, and enquiry service.',
-  ],
-  '/cookie-policy': [
-    'Cookie policy',
-    'Learn about the LinkqGlobal website implementation, which does not set analytics, advertising, or tracking cookies.',
   ],
 };
 

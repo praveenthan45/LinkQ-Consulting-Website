@@ -33,7 +33,6 @@ export function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="privacy-policy" element={<Legal />} />
           <Route path="terms-of-use" element={<Legal />} />
-          <Route path="cookie-policy" element={<Legal />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

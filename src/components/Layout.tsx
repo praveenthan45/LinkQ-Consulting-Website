@@ -536,7 +536,6 @@ export function Footer() {
             <div className="footer-legal-links" aria-label="Legal">
               <Link to="/privacy-policy">Privacy policy</Link>
               <Link to="/terms-of-use">Terms of use</Link>
-              <Link to="/cookie-policy">Cookie policy</Link>
             </div>
           </Reveal>
           <Reveal className="footer-contact" delay={210}>
