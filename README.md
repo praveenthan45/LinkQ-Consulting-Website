@@ -62,11 +62,11 @@ The request limiter allows five submissions per 15-minute window and keeps only 
 
 ## Daily Insights publishing
 
-The Daily Industry Insights workflow runs at 8:47 a.m. India time and prepares three AI-written articles per successful daily run. It rotates through consulting topics, fetches India data from World Bank Open Data, and checks for relevant recent U.S. Federal Register notices. Articles list their sources and indicate AI authorship. The image collector searches Wikimedia Commons photos through Openverse and saves responsive WebP copies with credits. If a licensed download is unavailable, the article uses the site's existing topic image.
+The Daily Industry Insights workflow runs at 8:47 a.m. India time. It publishes up to three briefings from recent U.S. Federal Register notices relevant to manufacturing, logistics, AI, FMCG, or education technology. Briefings link to the original notices and include short attributed excerpts when available. Days without a qualifying source produce no posts. Licensed Wikimedia Commons photos found through Openverse are credited and saved as responsive WebP files. Existing topic images are used if an eligible photo cannot be downloaded.
 
-- Local source and image preview: `npm run insights:publish -- --dry-run`. With `OPENAI_API_KEY` in your local `.env`, this also previews generated titles without publishing.
-- Local publication: `npm run insights:publish`. Add `OPENAI_API_KEY` to your local `.env` first, then rebuild the website to see new articles.
-- Scheduled publication: add `OPENAI_API_KEY` as a GitHub Actions repository secret. The workflow verifies the build before committing the articles and downloaded images to `main`. Deploy the resulting commit on EC2 using your existing deployment process.
+- Preview source matches locally with `npm run insights:publish -- --dry-run`.
+- Prepare posts and images locally with `npm run insights:publish`, then build the website to see them.
+- GitHub Actions verifies the build before committing the new posts and images to `main`. Deploy that commit to EC2 using your deployment process. The publisher uses public sources and requires no API key.
 
 ## Linux VPS deployment
 

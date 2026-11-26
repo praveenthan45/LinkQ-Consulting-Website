@@ -26,8 +26,6 @@ jobs:
       - run: npm ci --include=dev
       - name: Collect and prepare today's posts
         run: npx --no-install tsx scripts/publish-insights.ts
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       - name: Verify and publish
         run: |
           if git diff --quiet -- src/content/dailyInsights.json; then

@@ -1,24 +1,6 @@
 import sharp from 'sharp';
 import { z } from 'zod';
 
-export async function collectData(indicator: string) {
-  const response = await fetch(
-    `https://api.worldbank.org/v2/country/IND/indicator/${indicator}?format=json&mrnev=3`,
-    { signal: AbortSignal.timeout(15_000) },
-  );
-  if (!response.ok) throw new Error(`World Bank returned HTTP ${response.status}`);
-  const [, rows] = z.tuple([z.unknown(), z.array(z.object({
-    date: z.string().regex(/^\d{4}$/),
-    value: z.number(),
-    indicator: z.object({ value: z.string() }),
-  })).min(1)]).parse(await response.json());
-  const title = rows[0].indicator.value;
-  return {
-    source: { publisher: 'World Bank Open Data', title, url: `https://data.worldbank.org/indicator/${indicator}?locations=IN` },
-    evidence: `${title}, India. Historical observations by year: ${rows.map(({ date, value }) => `${date}: ${value}`).join(', ')}.`,
-  };
-}
-
 const photoRecord = z.object({
   title: z.string().trim().min(1).max(240),
   creator: z.string().trim().min(1).max(200),
