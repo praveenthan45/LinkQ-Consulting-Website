@@ -62,9 +62,11 @@ The request limiter allows five submissions per 15-minute window and keeps only 
 
 ## Daily Insights publishing
 
-The Daily Industry Insights workflow runs on GitHub at 8:47 a.m. India time. It checks the U.S. Federal Register for recent updates on manufacturing, logistics, AI, food labeling, and education technology. Each run publishes up to three new source briefings with the official title and original link. With zero new matches, it publishes two clearly labeled AI-generated guidance articles.
+The Daily Industry Insights workflow runs at 8:47 a.m. India time and prepares three AI-written articles per successful daily run. It rotates through consulting topics, fetches India data from World Bank Open Data, and checks for relevant recent U.S. Federal Register notices. Articles list their sources and indicate AI authorship. The image collector searches Wikimedia Commons photos through Openverse and saves responsive WebP copies with credits. If a licensed download is unavailable, the article uses the site's existing topic image.
 
-Add `OPENAI_API_KEY` as a GitHub Actions repository secret to enable the fallback. The workflow commits verified content to `main`, so the repository must allow the workflow token to push. For Render publishing, connect the GitHub repo and select **On Commit** under Auto-Deploy. Run **Daily Industry Insights → Run workflow** in GitHub Actions to verify the first live run. Use `npx tsx scripts/publish-insights.ts --dry-run` for a local preview without writing posts.
+- Local source and image preview: `npm run insights:publish -- --dry-run`. With `OPENAI_API_KEY` in your local `.env`, this also previews generated titles without publishing.
+- Local publication: `npm run insights:publish`. Add `OPENAI_API_KEY` to your local `.env` first, then rebuild the website to see new articles.
+- Scheduled publication: add `OPENAI_API_KEY` as a GitHub Actions repository secret. The workflow verifies the build before committing the articles and downloaded images to `main`. Deploy the resulting commit on EC2 using your existing deployment process.
 
 ## Linux VPS deployment
 

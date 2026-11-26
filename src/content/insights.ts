@@ -20,6 +20,8 @@ export interface InsightArticleData {
   relatedServices: string[];
   relatedArticles: string[];
   source?: { publisher: string; url: string; date: string };
+  sources?: { publisher: string; title: string; url: string; date?: string }[];
+  imageCredit?: { title: string; creator: string; url: string; licenseUrl: string };
   aiGenerated?: boolean;
 }
 

@@ -43,7 +43,7 @@ export function InsightArticle() {
             </time>{' '}
             · {a.readTime}
             {a.source && ' · Source briefing'}
-            {a.aiGenerated && ' · AI-generated guidance'}
+            {a.aiGenerated && ' · AI-written'}
           </div>
         </div>
       </PageBanner>
@@ -56,13 +56,31 @@ export function InsightArticle() {
             {' '}<a href={a.source.url}>Read the original source</a>
           </p>
         )}
-        {a.aiGenerated && <p>This AI-generated article covers general industry practices.</p>}
+        {a.imageCredit && (
+          <p>
+            Illustrative photo <a href={a.imageCredit.url}>{a.imageCredit.title}</a> by {a.imageCredit.creator}
+            {' · '}<a href={a.imageCredit.licenseUrl}>Image license</a>. Resized for this site.
+          </p>
+        )}
         {a.sections.map(([title, text]) => (
           <section key={title}>
             <h2>{title}</h2>
             <p>{text}</p>
           </section>
         ))}
+        {a.sources && (
+          <section>
+            <h2>Sources</h2>
+            <ul>
+              {a.sources.map((source) => (
+                <li key={source.url}>
+                  <a href={source.url}>{source.title}</a> · {source.publisher}
+                  {source.date && <> · <time dateTime={source.date}>{source.date}</time></>}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
         {/* 6. Key Takeaways Callout Box */}
         {a.keyTakeaways && a.keyTakeaways.length > 0 && (
