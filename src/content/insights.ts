@@ -618,8 +618,38 @@ const rawInsights: InsightArticleData[] = [
   },
 ];
 
+type StoredInsight = Omit<InsightArticleData, 'category' | 'sections'> & {
+  category: string;
+  sections: string[][];
+};
+
+const categories: ReadonlySet<string> = new Set<InsightArticleData['category']>([
+  'Industry Trends',
+  'Technology & AI',
+  'Business Strategy',
+  'Operations & Supply Chain',
+  'Case Studies',
+  'Research & Reports',
+]);
+
+function isInsightCategory(value: string): value is InsightArticleData['category'] {
+  return categories.has(value);
+}
+
+function restoreInsight({ category, sections, ...article }: StoredInsight): InsightArticleData {
+  if (!isInsightCategory(category)) throw new Error(`Invalid category for ${article.slug}`);
+  return {
+    ...article,
+    category,
+    sections: sections.map((section) => {
+      if (section.length !== 2) throw new Error(`Invalid section for ${article.slug}`);
+      return [section[0], section[1]];
+    }),
+  };
+}
+
 export const insights: InsightArticleData[] = [
-  ...(dailyInsights as InsightArticleData[]),
+  ...dailyInsights.map(restoreInsight),
   ...rawInsights,
 ].sort(
   (a, b) => Date.parse(`${b.date}T00:00:00Z`) - Date.parse(`${a.date}T00:00:00Z`),
