@@ -1,1 +1,66 @@
-[]
+[
+  {
+    "date": "2026-11-27",
+    "category": "Industry Trends",
+    "image": "daily-insights/source-fr-2026-24037",
+    "imageAlt": "Hyundai car assembly line",
+    "relatedServices": [
+      "manufacturing-consulting"
+    ],
+    "relatedArticles": [],
+    "slug": "source-fr-2026-24037",
+    "title": "U.S. Environmental Protection Agency (EPA) Contractor and Subcontractor Access to Confidential Business Information (CBI) Submitted Under Clean Air Act (CAA), Act To Prevent Pollution From Ships (APPS), and American Innovation and Manufacturing Act (AIM); Correction",
+    "summary": "A U.S. Federal Register update related to manufacturing. Follow the original notice for details.",
+    "readTime": "1 min briefing",
+    "sections": [
+      [
+        "From the original notice",
+        "“The United States Environmental Protection Agency's (EPA's) Office of Enforcement and Compliance Assurance (OECA) intends to authorize a contractor and…”"
+      ]
+    ],
+    "keyTakeaways": [],
+    "source": {
+      "publisher": "U.S. Federal Register",
+      "url": "https://www.federalregister.gov/documents/2026/11/27/2026-24037/us-environmental-protection-agency-epa-contractor-and-subcontractor-access-to-confidential-business",
+      "date": "2026-11-27"
+    },
+    "imageCredit": {
+      "title": "Hyundai car assembly line",
+      "creator": "User: Anonyme",
+      "url": "https://commons.wikimedia.org/w/index.php?curid=1987247",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5/"
+    }
+  },
+  {
+    "date": "2026-11-27",
+    "category": "Operations & Supply Chain",
+    "image": "daily-insights/source-fr-2026-24149",
+    "imageAlt": "Container Port Road South",
+    "relatedServices": [
+      "supply-chain-operations"
+    ],
+    "relatedArticles": [],
+    "slug": "source-fr-2026-24149",
+    "title": "Heightened Import Disclosures for Supply Chain Visibility; Extension of Comment Period",
+    "summary": "A U.S. Federal Register update related to supply chain. Follow the original notice for details.",
+    "readTime": "1 min briefing",
+    "sections": [
+      [
+        "From the original notice",
+        "“This document announces that U.S. Customs and Border Protection (CBP) will extend the comment period for an additional 45 days…”"
+      ]
+    ],
+    "keyTakeaways": [],
+    "source": {
+      "publisher": "U.S. Federal Register",
+      "url": "https://www.federalregister.gov/documents/2026/11/27/2026-24149/heightened-import-disclosures-for-supply-chain-visibility-extension-of-comment-period",
+      "date": "2026-11-27"
+    },
+    "imageCredit": {
+      "title": "Container Port Road South",
+      "creator": "Baycrest",
+      "url": "https://commons.wikimedia.org/w/index.php?curid=5031772",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5/"
+    }
+  }
+]
