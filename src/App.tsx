@@ -13,6 +13,7 @@ import {
   NotFound,
 } from './pages/Pages';
 import { Contact } from './pages/Contact';
+import { Events, EventDetail } from './pages/Events';
 import { Legal } from './pages/Legal';
 
 export function App() {
@@ -30,6 +31,8 @@ export function App() {
           <Route path="collaboration" element={<Collaboration />} />
           <Route path="insights" element={<Insights />} />
           <Route path="insights/:slug" element={<InsightArticle />} />
+          <Route path="events" element={<Events />} />
+          <Route path="events/:slug" element={<EventDetail />} />
           <Route path="contact" element={<Contact />} />
           <Route path="privacy-policy" element={<Legal />} />
           <Route path="terms-of-use" element={<Legal />} />

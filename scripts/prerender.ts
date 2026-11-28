@@ -15,6 +15,13 @@ for (const route of [...server.staticRoutes, '/404']) {
     await writeFile(path.join(target, 'index.html'), html);
   }
 }
+// Organizer events change between releases. Their detail routes share a hydration shell.
+await writeFile(
+  'dist/events/_detail.html',
+  template
+    .replace('<!--app-head-->', server.renderHead('/events/event'))
+    .replace('<!--app-html-->', server.render('/events/event')),
+);
 const base = server.siteUrl;
 await writeFile(
   'dist/robots.txt',
@@ -25,7 +32,7 @@ await writeFile(
 if (base)
   await writeFile(
     'dist/sitemap.xml',
-    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${server.staticRoutes.map((r: string) => `<url><loc>${base}${r}</loc></url>`).join('')}</urlset>`,
+    `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${server.staticRoutes.filter((route: string) => !server.getPageMeta(route).noindex).map((route: string) => `<url><loc>${base}${route}</loc></url>`).join('')}</urlset>`,
   );
 console.info(
   `Prerendered ${server.staticRoutes.length} public routes plus the 404 page. ${base ? 'Canonical URLs and sitemap generated.' : 'Set VITE_SITE_URL for indexable production metadata and sitemap.'}`,

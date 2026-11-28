@@ -70,12 +70,20 @@ The Daily Industry Insights workflow is scheduled for 8:47 a.m. India time. It p
 - Prepare posts and images locally with `npm run insights:publish`, then build the website to see them.
 - GitHub Actions verifies the build before committing the new posts and images to `main`. Deploy that commit to EC2 using your deployment process.
 
+## Global industry events
+
+The server reads upcoming listings from the [Koelnmesse trade fair calendar](https://www.koelnmesse.com/current-dates/all-trade-fairs/) and the [Linux Foundation event calendar](https://events.linuxfoundation.org/about/calendar/). It refreshes at startup and every six hours while running, storing the last successful snapshot for each source in PostgreSQL. Expired listings are removed from the directory. If an organizer feed is unavailable, its last successful snapshot can be used for up to seven days. No API key is required for these sources.
+
+The public site reads `GET /api/events` and uses a common server shell for new event detail links between builds. Organizer banners and logos come from the two allowlisted organizer image hosts via `GET /api/events/:slug/artwork`. Events with missing or shared artwork get individual illustrated covers. Registration goes to an official registration link when the source supplies one, or to the organizer’s event page. LinkQ does not collect event registrations.
+
+Deploy the database migration, updated Node service, and updated Nginx configuration together. Grant the runtime database role SELECT, INSERT, and UPDATE on `event_feed_snapshots`, and allow outbound HTTPS from the service to the organizer calendars and `media-km.koelnmesse.io`. Review organizer calendars for coverage and registration changes.
+
 ## Linux VPS deployment
 
 This repository targets the Node/Express + PostgreSQL + Nginx VPS architecture specified in the brief. It is not published to a static-only host: that would leave the enquiry system disconnected.
 
 1. Provision a supported Node runtime, PostgreSQL, Nginx, and a dedicated unprivileged `linkq` service account. Place the checkout at `/srv/linkq`.
-2. Create a PostgreSQL database and separate migration/runtime roles. Use SCRAM authentication, bind PostgreSQL to loopback or a private network, and use a strong unique password. Grant the migration role schema creation rights. The runtime role needs connection, schema usage, and select/insert/update on `enquiries`; do not grant superuser or database creation rights.
+2. Create a PostgreSQL database and separate migration/runtime roles. Use SCRAM authentication, bind PostgreSQL to loopback or a private network, and use a strong unique password. Grant the migration role schema creation rights. The runtime role needs connection, schema usage, and select/insert/update on `enquiries` and `event_feed_snapshots`; do not grant superuser or database creation rights.
 3. Install from the lockfile with `npm ci`, then run `npm run db:generate`. Set the migration-role `DATABASE_URL` and apply `npm run db:migrate`. Never use the bundled development credentials in production.
 4. Set `VITE_SITE_URL` to the approved HTTPS origin and run `npm run build`. Confirm canonical URLs, `dist/sitemap.xml`, and the indexable robots file. All marketing content is present in the generated HTML without client JavaScript.
 5. Store runtime configuration in `/etc/linkq/environment`, readable only by root and the service group. Use the runtime database role, production origins, and `TRUST_PROXY=1`. Configure SMTP if notifications are needed.

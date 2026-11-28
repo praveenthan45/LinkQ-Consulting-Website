@@ -8,6 +8,8 @@ import path from 'node:path';
 import { enquirySchema } from '../shared/enquiry.js';
 import { db } from './db.js';
 import { emailConfigured, sendNotification } from './mail.js';
+import { getEventListing } from './events.js';
+import { getOrganizerArtwork } from './event-artwork.js';
 export function createApp({
   rateLimitMax = 5,
   notifier = sendNotification,
@@ -57,6 +59,27 @@ export function createApp({
     } catch {
       res.status(503).json({ status: 'unavailable', database: 'unavailable' });
     }
+  });
+  app.get('/api/events', async (_req, res) => {
+    try {
+      const listing = await getEventListing();
+      if (listing) {
+        res.set('Cache-Control', 'public, max-age=300');
+        return res.json(listing);
+      }
+    } catch {
+      console.warn('event_listing_unavailable');
+    }
+    return res.status(503).json({ message: 'Event listings are temporarily unavailable.' });
+  });
+  app.get('/api/events/:slug/artwork', async (req, res) => {
+    if (!/^[a-z0-9-]{1,120}$/.test(req.params.slug)) return res.sendStatus(404);
+    const listing = await getEventListing().catch(() => undefined);
+    const event = listing?.events.find((item) => item.slug === req.params.slug);
+    if (!event?.artwork) return res.sendStatus(404);
+    const image = await getOrganizerArtwork(event.artwork.url);
+    if (!image) return res.sendStatus(502);
+    return res.type('webp').set('Cache-Control', 'public, max-age=3600').send(image);
   });
   const salt = randomBytes(32);
   const limiter = rateLimit({
@@ -170,6 +193,12 @@ export function createApp({
   if (process.env.NODE_ENV === 'production') {
     const dist = path.resolve('dist');
     app.use(express.static(dist, { index: false, redirect: false }));
+    app.get(/^\/events\/[a-z0-9-]+\/?$/, async (req, res) => {
+      const slug = req.path.split('/')[2];
+      const listing = await getEventListing().catch(() => undefined);
+      const status = !listing ? 503 : listing.events.some((event) => event.slug === slug) ? 200 : 404;
+      res.status(status).sendFile(path.join(dist, 'events', '_detail.html'));
+    });
     app.get('/{*path}', (req, res) => {
       const clean = path.normalize(req.path).replace(/^([/\\])+/, '');
       const target = path.resolve(dist, clean, 'index.html');

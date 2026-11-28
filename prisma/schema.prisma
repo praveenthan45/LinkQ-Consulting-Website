@@ -33,3 +33,11 @@ model Enquiry {
   @@index([createdAt])
   @@map("enquiries")
 }
+
+model EventFeedSnapshot {
+  source    String   @id
+  events    Json
+  fetchedAt DateTime @map("fetched_at") @db.Timestamptz(3)
+
+  @@map("event_feed_snapshots")
+}

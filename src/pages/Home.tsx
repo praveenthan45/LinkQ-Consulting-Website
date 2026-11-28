@@ -6,12 +6,54 @@ import { DepthImage, PerspectiveStack, Reveal } from '../components/Motion';
 import { CTA } from '../components/Layout';
 import { insights } from '../content/insights';
 import { industries } from '../content/industries';
+import { brandName } from '../content/metadata';
 
 const homeIndustryPhotos = [
   { slug: 'manufacturing-industrial', label: 'Manufacturing', name: 'home-manufacturing', alt: 'Manufacturing team reviewing equipment on the factory floor' },
   { slug: 'fmcg-consumer-goods', label: 'Consumer Goods', name: 'home-fmcg', alt: 'Stocked grocery aisles in a retail store' },
   { slug: 'education', label: 'Education', name: 'collaborative-learning', alt: 'Learners collaborating around a laptop' },
 ];
+
+const partners = [
+  { logo: 'audioflow', name: 'AudioFlow' },
+  { logo: 'pluga11y', name: 'Pluga11y' },
+  { logo: 'wind-of-change', name: 'WOC — Wind of Change' },
+  { logo: 'gentize', name: 'Gentize Innovations' },
+  { logo: 'trueaccessibility', name: 'Trueaccessibility' },
+  { logo: 'nayacura', name: 'nayacura' },
+  { logo: 'elevate', name: 'Elevate' },
+];
+
+function Partners() {
+  return (
+    <section className="section partners-section" aria-labelledby="partners-heading">
+      <div className="container">
+        <h2 id="partners-heading" className="partners-heading">Our partners</h2>
+        <div className="partners-viewport" tabIndex={0} role="group" aria-label="Partner logos">
+          <div className="partners-track">
+            {[false, true].map((duplicate) => (
+              <ul className="partners-logos" key={String(duplicate)} aria-hidden={duplicate || undefined}>
+                {partners.map(({ logo, name }) => (
+                  <li key={logo}>
+                    <img
+                      src={`/images/partners/${logo}.webp`}
+                      alt={duplicate ? '' : name}
+                      className={logo === 'pluga11y' ? 'partner-logo-pluga11y' : undefined}
+                      width="180"
+                      height="60"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export function Home() {
   return (
@@ -51,7 +93,7 @@ export function Home() {
                 We study your business, review readiness and certification needs, then help plan suitable industry connections and the work that follows.
               </p>
               <Link to="/about" className="text-link">
-                Get to know LinkqGlobal
+                Get to know {brandName}
                 <span className="link-line" />
               </Link>
             </div>
@@ -199,6 +241,7 @@ export function Home() {
           </div>
         </div>
       </section>
+      <Partners />
       <CTA />
     </>
   );

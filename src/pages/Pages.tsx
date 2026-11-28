@@ -24,7 +24,7 @@ export function About() {
             <br />Global possibility.
           </>
         }
-        description="LinkqGlobal helps small businesses and growing startups prepare for meaningful collaboration with global industry partners."
+        description="LinkQ Global Consulting is a startup that helps small businesses and growing startups prepare to work with global industry partners."
         image="collaboration"
         alt="Bright collaborative business workspace"
         className="about-hero"
@@ -41,10 +41,13 @@ export function About() {
           </div>
           <div>
             <p>
-              LinkqGlobal Consulting works between ambitious local businesses and potential global industry collaborators. We start with your offering, customers, capacity, records, and the result you want from a partnership.
+              Our experienced industry experts help you assess your offering, customers, and capacity before building a business case and identifying potential global partners.
             </p>
             <p>
-              We develop a business case, identify verification and certification requirements, research partner fit, and support the conversations that could lead to a practical tie-up.
+              A dedicated team reviews each business’s paperwork, checks its existing certifications and licences, and identifies gaps to address before partner discussions.
+            </p>
+            <p>
+              We’ve recently completed four to five projects.
             </p>
           </div>
         </div>

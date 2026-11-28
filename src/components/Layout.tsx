@@ -50,11 +50,13 @@ const navigation = [
   ['/industries', 'Industry'],
   ['/collaboration', 'Collaboration'],
   ['/insights', 'Insights'],
+  ['/events', 'Events'],
   ['/about', 'About us'],
   ['/contact', 'Contact'],
 ] as const;
 
 const navLinksAfterDropdowns = [
+  ['/events', 'Events'],
   ['/about', 'About us'],
   ['/contact', 'Contact'],
 ] as const;

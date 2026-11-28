@@ -8,7 +8,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 process.chdir(root);
 const websiteUrl = 'http://127.0.0.1:5173/';
 const children = new Set();
-let database;
+let stopDatabase;
 let shuttingDown = false;
 let servicesReady = false;
 
@@ -161,9 +161,9 @@ async function shutdown(exitCode = 0) {
       });
     } else child.kill('SIGTERM');
   }
-  if (database) {
+  if (stopDatabase) {
     try {
-      await database.stop();
+      await stopDatabase();
     } catch {
       console.error('The local database could not shut down cleanly. Check before restarting.');
       exitCode = 1;
@@ -235,7 +235,7 @@ async function main() {
       console.info('Starting local PostgreSQL...');
       const { default: EmbeddedPostgres } = await import('embedded-postgres');
       const databaseDir = path.join(root, '.local-db');
-      database = new EmbeddedPostgres({
+      const database = new EmbeddedPostgres({
         databaseDir,
         port: 54329,
         user: decodeURIComponent(url.username),
@@ -245,7 +245,29 @@ async function main() {
         onError: (message) => console.error(message),
       });
       if (!existsSync(path.join(databaseDir, 'PG_VERSION'))) await database.initialise();
-      await database.start();
+      if (process.platform === 'win32') {
+        const { pg_ctl: pgCtl } = await import(`@embedded-postgres/windows-${process.arch}`);
+        const logPath = path.join(root, '.local-postgres.log');
+        // Use PostgreSQL's controller so normal shutdown does not force-kill the server.
+        execFileSync(pgCtl, [
+          'start', '-D', databaseDir, '-l', logPath, '-o', '-h 127.0.0.1 -p 54329', '-w', '-t', '60',
+        ], { stdio: 'inherit', windowsHide: true, timeout: 65000 });
+        stopDatabase = () => {
+          const pidFile = path.join(databaseDir, 'postmaster.pid');
+          // Ctrl+C can reach PostgreSQL through the console before this handler runs.
+          if (!existsSync(pidFile)) return;
+          try {
+            execFileSync(pgCtl, [
+              'stop', '-D', databaseDir, '-m', 'fast', '-w', '-t', '10',
+            ], { stdio: 'inherit', windowsHide: true, timeout: 15000 });
+          } catch (error) {
+            if (existsSync(pidFile)) throw error;
+          }
+        };
+      } else {
+        await database.start();
+        stopDatabase = () => database.stop();
+      }
       const databaseName = decodeURIComponent(url.pathname.slice(1));
       const client = database.getPgClient('postgres', '127.0.0.1');
       await client.connect();
@@ -253,7 +275,9 @@ async function main() {
         const existing = await client.query('SELECT 1 FROM pg_database WHERE datname = $1', [
           databaseName,
         ]);
-        if (!existing.rowCount) await database.createDatabase(databaseName);
+        if (!existing.rowCount) {
+          await client.query(`CREATE DATABASE ${client.escapeIdentifier(databaseName)}`);
+        }
       } finally {
         await client.end();
       }
@@ -299,7 +323,7 @@ async function main() {
       process.exitCode = 1;
     }
   }
-  if (children.size || database) {
+  if (children.size || stopDatabase) {
     console.info('Keep this window open while using the site. Press Ctrl+C here to stop it.\n');
   } else console.info('The site is running in its existing terminal window.');
 }

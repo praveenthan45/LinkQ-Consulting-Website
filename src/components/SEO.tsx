@@ -1,49 +1,59 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getPageMeta } from '../content/metadata';
+import { brandName, getPageMeta, getStructuredData, structuredDataId } from '../content/metadata';
 export function SEOManager() {
   const { pathname } = useLocation();
   useEffect(() => {
     const m = getPageMeta(pathname);
     document.title = m.title;
-    function setMeta(selector: string, attribute: string, value: string) {
-      let node = document.head.querySelector<HTMLMetaElement>(`meta[${selector}]`);
+    function setMeta(attribute: 'name' | 'property', key: string, value: string) {
+      let node = document.head.querySelector<HTMLMetaElement>(`meta[${attribute}="${key}"]`);
+      if (!value) {
+        node?.remove();
+        return;
+      }
       if (!node) {
         node = document.createElement('meta');
-        const parts = selector.split('=');
-        node.setAttribute(parts[0], parts[1].replaceAll('"', ''));
+        node.setAttribute(attribute, key);
         document.head.append(node);
       }
-      node.setAttribute(attribute, value);
+      node.content = value;
     }
-    setMeta('name="description"', 'content', m.description);
-    setMeta('name="robots"', 'content', m.noindex ? 'noindex, nofollow' : 'index, follow');
-    setMeta('property="og:title"', 'content', m.title);
-    setMeta('property="og:description"', 'content', m.description);
-    setMeta('property="og:type"', 'content', m.article ? 'article' : 'website');
-    setMeta('property="og:site_name"', 'content', 'LinkqGlobal Consulting');
-    setMeta('name="twitter:title"', 'content', m.title);
-    setMeta('name="twitter:description"', 'content', m.description);
+    setMeta('name', 'description', m.description);
+    setMeta('name', 'robots', m.noindex ? 'noindex, nofollow' : 'index, follow');
+    setMeta('property', 'og:title', m.title);
+    setMeta('property', 'og:description', m.description);
+    setMeta('property', 'og:type', m.article ? 'article' : 'website');
+    setMeta('property', 'og:site_name', brandName);
+    setMeta('property', 'og:url', m.canonical);
+    setMeta('property', 'og:image', m.canonical ? m.image : '');
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', m.title);
+    setMeta('name', 'twitter:description', m.description);
+    let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (m.canonical) {
-      let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
       if (!link) {
         link = document.createElement('link');
         link.rel = 'canonical';
         document.head.append(link);
       }
       link.href = m.canonical;
-      setMeta('property="og:url"', 'content', m.canonical);
-      setMeta('property="og:image"', 'content', m.image);
+    } else {
+      link?.remove();
     }
-    const data = document.head.querySelector('script[type="application/ld+json"]');
-    if (data)
-      data.textContent = JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': m.service ? 'Service' : m.article ? 'Article' : 'Organization',
-        name: m.service?.name || m.article?.title || 'LinkqGlobal Consulting',
-        description: m.description,
-        ...(m.canonical ? { url: m.canonical } : {}),
-      });
+    const structured = getStructuredData(m);
+    let data = document.head.querySelector<HTMLScriptElement>(`#${structuredDataId}`);
+    if (structured) {
+      if (!data) {
+        data = document.createElement('script');
+        data.id = structuredDataId;
+        data.type = 'application/ld+json';
+        document.head.append(data);
+      }
+      data.textContent = structured;
+    } else {
+      data?.remove();
+    }
   }, [pathname]);
   return null;
 }
