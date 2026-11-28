@@ -62,11 +62,13 @@ The request limiter allows five submissions per 15-minute window and keeps only 
 
 ## Daily Insights publishing
 
-The Daily Industry Insights workflow runs at 8:47 a.m. India time. It publishes up to three briefings from recent U.S. Federal Register notices relevant to manufacturing, logistics, AI, FMCG, or education technology. Briefings link to the original notices and include short attributed excerpts when available. Days without a qualifying source produce no posts. Licensed Wikimedia Commons photos found through Openverse are credited and saved as responsive WebP files. Existing topic images are used if an eligible photo cannot be downloaded.
+The Daily Industry Insights workflow is scheduled for 8:47 a.m. India time. It publishes up to three briefings from recent U.S. Federal Register notices relevant to manufacturing, logistics, AI, FMCG, or education technology. Briefings link to the original notices and include short attributed excerpts when available. Licensed Wikimedia Commons photos found through Openverse are credited and saved as responsive WebP files. Existing topic images are used if an eligible photo cannot be downloaded.
 
-- Preview source matches locally with `npm run insights:publish -- --dry-run`.
+- When there are no eligible new notices, an optional Gemini fallback creates two evergreen articles about rotating industry topics. Each uses an existing topic image and carries an AI-written label. A day with any source briefings uses those alone.
+- To enable the fallback, add `GEMINI_API_KEY` as a GitHub Actions repository secret or set it in your local `.env`. Gemini 3.1 Flash-Lite has a free tier subject to quota. Without a key, days with no eligible notices are skipped.
+- Preview source matches or configured AI drafts locally with `npm run insights:publish -- --dry-run`. A preview can call Gemini but does not write posts or images.
 - Prepare posts and images locally with `npm run insights:publish`, then build the website to see them.
-- GitHub Actions verifies the build before committing the new posts and images to `main`. Deploy that commit to EC2 using your deployment process. The publisher uses public sources and requires no API key.
+- GitHub Actions verifies the build before committing the new posts and images to `main`. Deploy that commit to EC2 using your deployment process.
 
 ## Linux VPS deployment
 

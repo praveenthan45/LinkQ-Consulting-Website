@@ -1,8 +1,10 @@
+import 'dotenv/config';
 import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { z } from 'zod';
 import { insights, type InsightArticleData } from '../src/content/insights.js';
 
 import { collectPhoto } from './insight-sources.js';
+import { generateInsightFallback } from './generate-insight-fallback.js';
 
 const archive = new URL('../src/content/dailyInsights.json', import.meta.url);
 const date = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kolkata' }).format(new Date());
@@ -74,9 +76,7 @@ async function publish() {
     console.warn(`Source query failed for ${topics[index].term}: ${batch.reason}`);
     return [];
   }).sort((a, b) => b.item.publication_date.localeCompare(a.item.publication_date));
-  if (batches.every((batch) => batch.status === 'rejected')) {
-    throw new Error('All Federal Register lookups failed. No posts were written.');
-  }
+  const allSourcesFailed = batches.every((batch) => batch.status === 'rejected');
 
   const seenSlugs = new Set(insights.map((article) => article.slug));
   const seenUrls = new Set(saved.flatMap((article) => [
@@ -123,11 +123,31 @@ async function publish() {
   }
 
   if (!posts.length) {
-    console.log('No fresh, relevant source notices. No posts were written.');
-    return;
+    const apiKey = process.env.GEMINI_API_KEY?.trim();
+    if (!apiKey) {
+      if (allSourcesFailed) throw new Error('All Federal Register lookups failed and GEMINI_API_KEY is unavailable.');
+      console.log('No eligible source notices. Set GEMINI_API_KEY to enable the AI fallback.');
+      return;
+    }
+
+    console.log(allSourcesFailed
+      ? 'All source lookups failed. Preparing evergreen AI-written guidance.'
+      : 'No eligible source notices. Preparing evergreen AI-written guidance.');
+    const day = Math.floor(Date.parse(date) / 86_400_000);
+    const selected = [topics[day % topics.length], topics[(day + 1) % topics.length]];
+    const drafts = await generateInsightFallback(apiKey, selected.map(({ term }) => term), insights.map(({ title }) => title));
+    for (const [index, draft] of drafts.entries()) {
+      posts.push({
+        ...baseArticle(selected[index]),
+        ...draft,
+        slug: `ai-industry-${date}-${index + 1}`,
+        readTime: '2 min read',
+        aiGenerated: true,
+      });
+    }
   }
   if (dryRun) {
-    console.log(posts.map(({ title, source }) => ({ title, source: source?.url })));
+    console.log(posts.map(({ title, source, aiGenerated }) => ({ title, source: source?.url, aiGenerated })));
     return;
   }
 
@@ -141,7 +161,8 @@ async function publish() {
   const pending = new URL(`${archive.href}.tmp`);
   await writeFile(pending, `${JSON.stringify([...posts, ...saved], null, 2)}\n`);
   await rename(pending, archive);
-  console.log(`Prepared ${posts.length} source briefings for ${date}.`);
+  const kind = posts[0].aiGenerated ? 'AI-written articles' : 'source briefings';
+  console.log(`Prepared ${posts.length} ${kind} for ${date}.`);
 }
 
 await publish();

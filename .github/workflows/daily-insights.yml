@@ -25,6 +25,8 @@ jobs:
           cache: npm
       - run: npm ci --include=dev
       - name: Collect and prepare today's posts
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: npx --no-install tsx scripts/publish-insights.ts
       - name: Verify and publish
         run: |
