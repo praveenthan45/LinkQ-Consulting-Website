@@ -129,7 +129,7 @@ const rawInsights: InsightArticleData[] = [
     ],
     keyTakeaways: [
       'Consolidate disjointed student administrative touchpoints into a unified mobile-friendly student portal.',
-      'Prioritize software usability and faculty enablement to guarantee classroom digital adoption.',
+      'Test software usability with faculty and make training part of the rollout.',
       'Implement predictive student engagement analytics to intervene before academic drop-out risks occur.',
     ],
     relatedServices: ['education-consulting', 'it-consulting', 'technology-automation'],
@@ -472,72 +472,42 @@ const rawInsights: InsightArticleData[] = [
   },
   {
     slug: 'case-study-warehouse-throughput-optimization',
-    title: 'Case Study: Optimizing Warehouse Throughput for a National Distributor',
+    title: "Illustrative Case Study: Improving Warehouse Picking",
     category: 'Case Studies',
     image: 'supply-inventory',
     imageAlt: 'Modern high-bay warehouse with automated forklifts and systematic inventory racking',
-    summary:
-      'How LinkqGlobal Consulting helped a nationwide consumer goods distributor compress order pick times by 32% and achieve 99.4% on-time order fulfillment.',
-    readTime: '6 min read',
+    summary: "An illustrative warehouse scenario for testing changes to slotting and picking while tracking speed and order accuracy.",
+    readTime: '2 min read',
     date: '2026-11-24',
     sections: [
-      [
-        'The Challenge: Severe Fulfillment Bottlenecks',
-        'A leading regional distributor operating three 250,000 sq. ft. fulfillment centers struggled with rising order volumes. Pickers traveled up to 14 miles per shift due to poor SKU slotting, generating high overtime costs and missed customer shipping deadlines.',
-      ],
-      [
-        'Our Approach: Data-Driven Facility Re-Engineering',
-        'LinkqGlobal conducted extensive ABC inventory velocity analysis and time-and-motion studies. We re-engineered the facility footprint, clustering high-velocity SKUs near packing bays and establishing zoned wave-picking workflows.',
-      ],
-      [
-        'Technology Integration: WMS Directed Voice-Picking',
-        'We assisted in evaluating and deploying voice-directed picking terminals integrated with the client’s existing Warehouse Management System (WMS). This hands-free system provided operators with optimal travel paths and instant barcode verification.',
-      ],
-      [
-        'Realized Business Outcomes',
-        'Within four months of rollout, pick cycle times dropped by 32%, overall facility throughput increased by 26%, and customer order fulfillment accuracy reached an all-time high of 99.4%.',
-      ],
+      ["Illustrative scenario", "A distributor facing longer pick times suspects that workers spend too much time walking between popular items and packing stations. The first step is to measure travel, waiting and handling separately on representative shifts."],
+      ["Pilot in one zone", "Move frequently picked items closer to packing where storage and safety rules allow. Compare similar orders before and after the change. If verification remains a bottleneck, separately trial barcode or voice-directed checks."],
+      ["Evaluate the trade-offs", "Compare travel per order, lines picked per labor hour and order accuracy. Include replenishment effort so that any time saved in picking is assessed alongside the work created elsewhere."],
     ],
     keyTakeaways: [
-      'Slotting high-velocity inventory near packing stations drastically compresses operator transit mileage.',
-      'Voice-directed picking technologies provide rapid payback with minimal operator training curve.',
-      'Measurable operational improvements require addressing physical layout and software logic in parallel.',
+      "Record the starting performance before changing the layout.",
+      "Compare both picking speed and accuracy before expanding a pilot.",
     ],
     relatedServices: ['supply-chain-operations', 'technology-automation', 'manufacturing-consulting'],
     relatedArticles: ['handoffs-behind-supply-chain-delays', 'building-resilient-supply-chain'],
   },
   {
     slug: 'case-study-enterprise-it-modernization',
-    title: 'Case Study: Modernizing Core IT Operations and Cloud Infrastructure',
+    title: "Illustrative Case Study: Modernizing Cloud Operations",
     category: 'Case Studies',
     image: 'digital-workplace',
     imageAlt: 'Enterprise software engineers collaborating on cloud infrastructure migration dashboard',
-    summary:
-      'How a mid-market financial enterprise eliminated 35% of cloud infrastructure waste and reduced release cycle times from months to weekly deployments.',
-    readTime: '6 min read',
+    summary: "An illustrative technology scenario for testing cloud cost controls and safer software releases.",
+    readTime: '2 min read',
     date: '2026-11-24',
     sections: [
-      [
-        'The Challenge: Runaway Cloud Costs and Fragile Releases',
-        'Following an unmanaged lift-and-shift cloud migration, an established financial services provider saw monthly cloud infrastructure costs double. Simultaneously, manual change approvals and brittle legacy code delayed new feature releases by up to 12 weeks.',
-      ],
-      [
-        'Our Approach: FinOps Audit and Architecture Refactoring',
-        'LinkqGlobal performed a rigorous cloud architecture assessment. We identified over-provisioned compute instances, unattached storage volumes, and absent auto-scaling configurations. Concurrently, we mapped software delivery bottlenecks across development and QA teams.',
-      ],
-      [
-        'Implementation: Platform Engineering and Automated CI/CD',
-        'We designed a standardized internal developer platform (IDP) utilizing Kubernetes and automated infrastructure-as-code (Terraform). We instituted automated test coverage gates, zero-trust security scanning, and automated rollback triggers.',
-      ],
-      [
-        'Measurable Outcomes and Financial ROI',
-        'The enterprise captured an immediate 35% recurring reduction in total cloud hosting expenditure while expanding deployment frequency from 4 times per year to continuous weekly production releases with zero customer-facing downtime.',
-      ],
+      ["Illustrative scenario", "A team wants to understand growing cloud costs and delays in deploying software. Start by assigning costs to workloads and mapping the steps between a finished change and a production release."],
+      ["Scope a manageable pilot", "Choose one application with a named owner. Review resource use, add automated checks for critical workflows and practice a rollback before introducing a change to production."],
+      ["Measure the pilot", "Track cloud cost per transaction, deployment frequency and incident recovery time. Review reliability and support effort alongside cost before applying the changes to more applications."],
     ],
     keyTakeaways: [
-      'Institute rigorous FinOps governance immediately following cloud migration to eliminate idle compute overhead.',
-      'Automate testing and deployment pipelines to decouple software release velocity from operational risk.',
-      'Standardize developer environments to eliminate the "works on my machine" friction across engineering pods.',
+      "Measure cost per unit of work alongside total spend.",
+      "Agree on release and rollback criteria before expanding the pilot.",
     ],
     relatedServices: ['it-consulting', 'technology-automation', 'data-analytics-ai'],
     relatedArticles: ['practical-digital-transformation-roadmap', 'data-readiness-before-an-ai-pilot'],
@@ -546,72 +516,49 @@ const rawInsights: InsightArticleData[] = [
   // 6. Research & Reports
   {
     slug: 'report-enterprise-tech-adoption-benchmarks',
-    title: 'Research Report: Enterprise Technology Adoption Benchmarks 2026',
+    title: "Guide: Measuring Enterprise Technology Adoption",
     category: 'Research & Reports',
     image: 'performance-reporting',
     imageAlt: 'Business intelligence analyst presenting benchmark research metrics on wall display',
-    summary:
-      'An empirical analysis of enterprise technology modernization across 250 mid-market organizations: cloud spend efficiency, AI deployment maturity, and cyber posture.',
-    readTime: '7 min read',
+    summary: "A practical guide to tracking cloud costs, software delivery and AI readiness using your own baseline.",
+    readTime: '2 min read',
     date: '2026-11-24',
     sections: [
-      [
-        'Executive Summary and Research Scope',
-        'This benchmark study analyzes technology adoption trends across 250 mid-market enterprises across North America and Europe. The findings illustrate a stark divergence between organizations capturing measurable ROI from digital investments and those experiencing budget dilution.',
-      ],
-      [
-        'Cloud Spend Governance and FinOps Maturity',
-        'Over 68% of surveyed organizations reported unexpected cloud budget overruns in the past fiscal year. Companies with formal FinOps practices and automated workload right-sizing achieved 28% lower unit infrastructure costs than unmanaged peers.',
-      ],
-      [
-        'Enterprise AI: Crossing the Pilot Chasm',
-        'While 84% of surveyed enterprises initiated generative or analytical AI pilots, only 22% successfully transitioned models into live production. Leading inhibitors included fragmented data pipelines, compliance hesitations, and lack of clear business ownership.',
-      ],
-      [
-        'Strategic Recommendations for CIOs and CTOs',
-        'Technology leaders must pivot from exploratory technology pilots to value-anchored engineering roadmaps. Prioritize unified data governance, developer platform engineering, and disciplined vendor contract negotiations to maximize technology capital efficiency.',
-      ],
+      ["Allocate cloud costs", "The FinOps Foundation describes allocating technology costs to the teams, products or workloads responsible for them. Start with a consistent naming or tagging approach and agree how to handle shared services."],
+      ["Track the cost of a useful unit", "Choose a measure that reflects the work the service performs, such as cost per transaction or per active customer. Document which costs are included and compare usage and spend together when the unit cost changes."],
+      ["Review technology pilots before scaling", "Define how each pilot will be evaluated before it starts. For an AI pilot, record the quality threshold, the cases requiring human review and who will own the system if it moves into production."],
     ],
     keyTakeaways: [
-      'Formal FinOps governance reduces enterprise cloud infrastructure expenditure by an average of 28%.',
-      'The primary obstacle to enterprise AI scaling is poor upstream data quality rather than model capability.',
-      'High-performing IT organizations invest heavily in developer platform automation to drive release velocity.',
+      "Make cost ownership visible before trying to reduce spend.",
+      "Set pilot success criteria using your own performance baseline.",
+    ],
+    sources: [
+      {"publisher": "FinOps Foundation", "title": "Allocation", "url": "https://www.finops.org/framework/capabilities/allocation/"},
+      {"publisher": "FinOps Foundation", "title": "Unit Economics", "url": "https://www.finops.org/framework/capabilities/unit-economics/"},
     ],
     relatedServices: ['it-consulting', 'data-analytics-ai', 'business-strategy'],
     relatedArticles: ['practical-digital-transformation-roadmap', 'data-readiness-before-an-ai-pilot'],
   },
   {
     slug: 'report-supply-chain-agility-index',
-    title: 'Research Report: Global Supply Chain Agility Index & Cross-Sector Analysis',
+    title: "Guide: Measuring Supply Chain Agility",
     category: 'Research & Reports',
     image: 'business-analytics',
     imageAlt: 'Supply chain analysts evaluating global trade logistics analytics on digital dashboards',
-    summary:
-      'Cross-sector benchmark data evaluating multi-echelon inventory turnover, dock dwell times, and freight contract resilience across manufacturing, retail, and FMCG.',
-    readTime: '7 min read',
+    summary: "A practical guide to tracking fulfillment, inventory and freight performance, with World Bank logistics data for international context.",
+    readTime: '2 min read',
     date: '2026-11-24',
     sections: [
-      [
-        'Research Framework and Sector Methodology',
-        'The Supply Chain Agility Index benchmarks operational velocity and inventory resilience across 180 enterprise supply chain networks in manufacturing, FMCG, retail, and logistics distribution.',
-      ],
-      [
-        'Inventory Turnover and Working Capital Traps',
-        'Enterprises operating with disconnected demand forecasting carry an average of 24 days more safety stock than agile peers. High-performing organizations leverage point-of-sale data integration to compress working capital by 19%.',
-      ],
-      [
-        'Warehouse Automation and Throughput Benchmarks',
-        'Facilities utilizing automated slotting algorithms and directed-voice picking achieved 38% higher items picked per labor hour, significantly insulating operations from ongoing warehouse staffing constraints.',
-      ],
-      [
-        'Freight Market Strategy in Shifting Rate Environments',
-        'Shippers maintaining balanced portfolio contracting (70% primary contract / 30% dynamic spot index) secured superior on-time pickup rates while mitigating rate volatility across intermodal freight corridors.',
-      ],
+      ["Use trade data for international context", "The World Bank Logistics Performance Indicators use tracking data to compare the speed and connectivity of international supply chains. Use them to frame questions about a market, then check the actual routes, service terms and costs available to your business."],
+      ["Establish your operating baseline", "Measure order fulfillment, stock availability and time waiting at the dock. Define when each clock starts and stops, then compare similar orders or shipment lanes to keep differences in demand and distance visible."],
+      ["Test changes against the baseline", "Pilot a warehouse or carrier change on a limited group of orders. Compare service reliability, total cost and any work shifted to another team before deciding whether to expand it."],
     ],
     keyTakeaways: [
-      'Integrate downstream customer demand signals to release up to 19% of locked working capital.',
-      'Invest in warehouse slotting automation to dramatically boost pick throughput per labor hour.',
-      'Adopt balanced freight carrier procurement strategies to guarantee equipment access during peak seasons.',
+      "Use country indicators as context for lane-specific decisions.",
+      "Measure service and cost together when evaluating a change.",
+    ],
+    sources: [
+      {"publisher": "World Bank", "title": "About the Logistics Performance Indicators", "url": "https://lpi.worldbank.org/en/about"},
     ],
     relatedServices: ['supply-chain-operations', 'fmcg-consulting', 'manufacturing-consulting'],
     relatedArticles: ['handoffs-behind-supply-chain-delays', 'building-resilient-supply-chain'],

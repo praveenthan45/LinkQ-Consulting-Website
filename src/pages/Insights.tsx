@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Mail, CheckCircle2 } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { insights } from '../content/insights';
 import { Breadcrumb, PageHero, SectionTitle, Photo, InsightCard } from '../components/Common';
 import { CTA } from '../components/Layout';
@@ -18,8 +18,6 @@ const categories = [
 export function Insights() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All Perspectives');
   const [searchQuery, setSearchQuery] = useState('');
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
 
   // Filter articles based on category and search
   const filteredArticles = insights.filter((a) => {
@@ -37,13 +35,6 @@ export function Insights() {
 
   // Popular/recommended articles
   const recommendedArticles = insights.slice(1, 4);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (newsletterEmail.trim().includes('@')) {
-      setSubscribed(true);
-    }
-  };
 
   return (
     <>
@@ -228,104 +219,6 @@ export function Insights() {
           </div>
         </section>
       )}
-
-      {/* Executive Newsletter Subscription Section */}
-      <section className="section container">
-        <div
-          style={{
-            background: 'var(--inverse-surface, #111)',
-            color: 'var(--inverse, #fff)',
-            padding: '56px 40px',
-            borderRadius: 4,
-            display: 'grid',
-            gridTemplateColumns: '1.2fr 1fr',
-            gap: 48,
-            alignItems: 'center',
-          }}
-          className="newsletter-box"
-        >
-          <div>
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                color: 'var(--accent)',
-                fontSize: '0.85rem',
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em',
-                marginBottom: 12,
-              }}
-            >
-              <Mail size={16} /> EXECUTIVE BRIEFING
-            </span>
-            <h2 style={{ color: 'inherit', fontSize: '1.8rem', lineHeight: 1.25, marginBottom: 14 }}>
-              Stay ahead with LinkqGlobal Insights.
-            </h2>
-            <p style={{ color: 'rgba(255,255,255,0.75)', margin: 0, fontSize: '0.98rem' }}>
-              Subscribe to receive our monthly digest of empirical benchmarks, technology
-              assessments, and strategic consulting viewpoints directly in your inbox.
-            </p>
-          </div>
-          <div>
-            {subscribed ? (
-              <div
-                style={{
-                  background: 'rgba(255,255,255,0.1)',
-                  padding: 24,
-                  borderRadius: 4,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                }}
-              >
-                <CheckCircle2 size={24} color="var(--accent)" />
-                <p style={{ margin: 0, fontSize: '0.95rem' }}>
-                  Thank you for subscribing. You will receive our next monthly executive briefing.
-                </p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubscribe} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <label htmlFor="newsletter-email" className="sr-only">
-                  Business email address
-                </label>
-                <input
-                  id="newsletter-email"
-                  type="email"
-                  required
-                  placeholder="Enter your business email"
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  style={{
-                    padding: '12px 16px',
-                    borderRadius: 4,
-                    border: '1px solid rgba(255,255,255,0.25)',
-                    background: 'rgba(255,255,255,0.06)',
-                    color: '#fff',
-                    fontSize: '0.95rem',
-                  }}
-                />
-                <button
-                  type="submit"
-                  className="button"
-                  style={{
-                    background: 'var(--accent)',
-                    borderColor: 'var(--accent)',
-                    color: '#fff',
-                    justifyContent: 'center',
-                  }}
-                >
-                  Subscribe to briefing
-                </button>
-                <span style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.6)' }}>
-                  We respect your privacy. No spam; unsubscribe at any time.
-                </span>
-              </form>
-            )}
-          </div>
-        </div>
-      </section>
 
       <CTA />
     </>

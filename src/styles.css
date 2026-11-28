@@ -2713,22 +2713,6 @@ main:focus {
 .form-success p {
   margin-top: 18px;
 }
-.form-reference {
-  display: inline-block;
-  padding: 10px 18px;
-  background: #fff;
-  border: 1px solid var(--line);
-  font-size: 0.9rem;
-  color: var(--ink);
-}
-.form-success-actions {
-  margin-top: 30px;
-  display: flex;
-  justify-content: center;
-}
-.form-success-actions .button {
-  margin-top: 0;
-}
 .honeypot {
   position: absolute;
   left: -10000px;
@@ -4388,10 +4372,6 @@ main:focus {
     grid-template-columns: 1fr !important;
     gap: 28px !important;
   }
-  .newsletter-box {
-    grid-template-columns: 1fr !important;
-    gap: 32px !important;
-  }
 }
 
 @media (max-width: 640px) {
@@ -4419,9 +4399,6 @@ main:focus {
   }
   .featured-highlight-card {
     padding: 20px !important;
-  }
-  .newsletter-box {
-    padding: 36px 24px !important;
   }
 }
 

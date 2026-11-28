@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import {
   Controller,
   useForm,
@@ -361,9 +361,30 @@ export function Contact() {
   const requestedIndustry = params.get('industry');
   const requestedSubject = params.get('subject')?.trim().slice(0, 200);
 
-  const [initialDefaults] = useState<DefaultValues<EnquiryFormInput>>(() => {
+  const freshDefaults = useMemo<DefaultValues<EnquiryFormInput>>(() => {
     const initialIndustry = resolveInitialIndustry(requestedIndustry);
     const initialService = resolveInitialService(requestedService, requestedIndustry);
+    return {
+      fullName: '',
+      businessEmail: '',
+      organization: '',
+      phoneNumber: '',
+      industry: initialIndustry,
+      industryOther: '',
+      service: initialService,
+      collaborationObjective: '',
+      collaborationObjectiveOther: '',
+      targetCountryRegion: '',
+      partnerType: '',
+      partnerTypeOther: '',
+      subject: requestedSubject || (initialService ? `Consultation about ${initialService}` : ''),
+      message: '',
+      consentGiven: false,
+      website: '',
+    };
+  }, [requestedIndustry, requestedService, requestedSubject]);
+
+  const [initialDefaults] = useState<DefaultValues<EnquiryFormInput>>(() => {
     const saved = readContactDraft();
     const shouldRestoreDraft = Boolean(
       saved && (saved.search === location.search || (!requestedService && !requestedIndustry)),
@@ -390,24 +411,7 @@ export function Contact() {
       };
     }
 
-    return {
-      fullName: '',
-      businessEmail: '',
-      organization: '',
-      phoneNumber: '',
-      industry: initialIndustry,
-      industryOther: '',
-      service: initialService,
-      collaborationObjective: '',
-      collaborationObjectiveOther: '',
-      targetCountryRegion: '',
-      partnerType: '',
-      partnerTypeOther: '',
-      subject: requestedSubject || (initialService ? `Consultation about ${initialService}` : ''),
-      message: '',
-      consentGiven: false,
-      website: '',
-    };
+    return freshDefaults;
   });
 
   const {
@@ -419,6 +423,7 @@ export function Contact() {
     watch,
     clearErrors,
     setError,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<EnquiryFormInput, unknown, EnquiryInput>({
     resolver: zodResolver(enquirySchema),
@@ -432,7 +437,6 @@ export function Contact() {
 
   const isCollaboration = selectedService === COLLABORATION_SERVICE;
   const [failure, setFailure] = useState('');
-  const [referenceNumber, setReferenceNumber] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const key = useRef<string | null>(null);
   const pending = useRef(false);
@@ -460,6 +464,17 @@ export function Contact() {
     return () => subscription.unsubscribe();
   }, [watch, success, location.search]);
 
+  useEffect(() => {
+    if (!success) return;
+    const timer = window.setTimeout(() => {
+      key.current = null;
+      lastPayload.current = '';
+      reset(freshDefaults);
+      setSuccess(false);
+    }, 5000);
+    return () => window.clearTimeout(timer);
+  }, [success, reset, freshDefaults]);
+
   async function submit(data: EnquiryInput) {
     if (pending.current) return;
     pending.current = true;
@@ -479,7 +494,6 @@ export function Contact() {
       });
       const result = (await response.json().catch(() => ({}))) as {
         message?: string;
-        referenceNumber?: string;
         fields?: Record<string, string[]>;
       };
       if (!response.ok) {
@@ -497,7 +511,6 @@ export function Contact() {
         );
       }
       clearContactDraft();
-      setReferenceNumber(result.referenceNumber || null);
       setSuccess(true);
       requestAnimationFrame(() => {
         resultRef.current?.focus({ preventScroll: true });
@@ -624,16 +637,6 @@ export function Contact() {
                 Your inquiry has been successfully submitted. Our team will review your requirements
                 and contact you regarding the next steps.
               </p>
-              {referenceNumber && (
-                <p className="form-reference">
-                  Reference number: <strong>{referenceNumber}</strong>
-                </p>
-              )}
-              <div className="form-success-actions">
-                <Link to="/" className="button">
-                  Return to website
-                </Link>
-              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit(submit)} noValidate>

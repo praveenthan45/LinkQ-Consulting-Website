@@ -332,8 +332,8 @@ describe('Website routes and key interactions', () => {
     await user.click(screen.getByRole('button', { name: 'Submit Inquiry' }));
 
     expect(await screen.findByRole('heading', { name: 'Thank you for reaching out.' })).toBeInTheDocument();
-    expect(screen.getByText('LQ-2026-GEN10001')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'Return to website' })).toHaveAttribute('href', '/');
+    expect(screen.queryByText('LQ-2026-GEN10001')).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'Return to website' })).not.toBeInTheDocument();
     expect(fetcher).toHaveBeenCalledOnce();
     const payload = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
     expect(payload.industry).toBe('Manufacturing & Industrial');
@@ -341,7 +341,11 @@ describe('Website routes and key interactions', () => {
     expect(payload.collaborationObjective).toBe('');
     expect(payload.targetCountryRegion).toBe('');
     expect(payload.partnerType).toBe('');
-  });
+    await waitFor(() => expect(screen.getByLabelText('Full Name *')).toHaveValue(''), { timeout: 6500 });
+    expect(screen.getByLabelText('Business Email *')).toHaveValue('');
+    expect(screen.getByRole('checkbox')).not.toBeChecked();
+    expect(screen.queryByText('Thank you for reaching out.')).not.toBeInTheDocument();
+  }, 15000);
 
   it('supports Technology Consulting selections with dynamic placeholder, counter, and independent focus', async () => {
     const user = userEvent.setup();
@@ -432,7 +436,7 @@ describe('Website routes and key interactions', () => {
     await user.click(screen.getByRole('checkbox'));
     await user.click(screen.getByRole('button', { name: 'Submit Inquiry' }));
 
-    expect(await screen.findByText('LQ-2026-COLLAB99')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Thank you for reaching out.' })).toBeInTheDocument();
     const sent = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
     expect(sent.collaborationObjective).toBe('Distribution / Dealership Partnership');
     expect(sent.targetCountryRegion).toBe('Germany, UAE, Southeast Asia');
@@ -474,7 +478,7 @@ describe('Website routes and key interactions', () => {
     await user.type(screen.getByLabelText('Specify partner type (optional)'), 'Contract R&D Lab');
     await user.click(screen.getByRole('button', { name: 'Submit Inquiry' }));
 
-    expect(await screen.findByText('LQ-2026-OTHER77')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Thank you for reaching out.' })).toBeInTheDocument();
     const sent = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
     expect(sent.industryOther).toBe('Medical Devices');
     expect(sent.collaborationObjectiveOther).toBe('Co-development & Regulatory Licensing');
@@ -510,7 +514,7 @@ describe('Website routes and key interactions', () => {
     await user.click(screen.getByRole('checkbox'));
     await user.click(screen.getByRole('button', { name: 'Submit Inquiry' }));
 
-    expect(await screen.findByText('LQ-2026-SWITCH5')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Thank you for reaching out.' })).toBeInTheDocument();
     const sent = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
     expect(sent.service).toBe('IT Consulting');
     expect(sent.collaborationObjective).toBe('');
@@ -565,7 +569,8 @@ describe('Website routes and key interactions', () => {
     for (let i = 1; i < timestamps.length; i++) {
       expect(timestamps[i]).toBeLessThanOrEqual(timestamps[i - 1]);
     }
-    expect(insights[0].date).toBe('2026-11-25');
+    const latest = insights[0];
+    expect(timestamps[0]).toBe(Math.max(...timestamps));
 
     open('/insights');
     const grids = document.querySelectorAll('main .insights-grid');
@@ -584,8 +589,9 @@ describe('Website routes and key interactions', () => {
     const primaryTimes = Array.from(grids[0].querySelectorAll('time')).map(
       (el) => el.getAttribute('dateTime') || '',
     );
-    expect(primaryTimes[0]).toBe('2026-11-25');
-    expect(screen.getByText(/Published 25 Nov 2026/)).toBeInTheDocument();
+    expect(primaryTimes[0]).toBe(latest.date);
+    const featured = document.querySelector('.featured-highlight-card');
+    expect(featured?.querySelector('h2 a')).toHaveAttribute('href', `/insights/${latest.slug}`);
   });
 
   it('retains entered form values on backend failure and succeeds on retry', async () => {
@@ -624,7 +630,7 @@ describe('Website routes and key interactions', () => {
     expect(screen.getByRole('checkbox')).toBeChecked();
 
     await user.click(screen.getByRole('button', { name: 'Submit Inquiry' }));
-    expect(await screen.findByText('LQ-2026-RETRY88')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Thank you for reaching out.' })).toBeInTheDocument();
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 

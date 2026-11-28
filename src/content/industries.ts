@@ -50,11 +50,6 @@ export interface IndustrySector {
   }[];
   relevantServices: string[]; // slugs in services.ts
   relevantInsights: string[]; // slugs in insights.ts
-  outcomes: {
-    metric: string;
-    label: string;
-    detail: string;
-  }[];
   valueProposition: string;
 }
 
@@ -141,17 +136,17 @@ export const industries: IndustrySector[] = [
       {
         area: 'OEE & Throughput Optimization',
         focus: 'Eliminate micro-stops and reduce cycle-time variation across core machining cells.',
-        impact: '15-22% increase in realized equipment throughput.',
+        impact: "Compare units produced per scheduled hour before and after changes.",
       },
       {
         area: 'Lean Quality & Scrap Reduction',
         focus: 'Standardized in-process inspection gates and root-cause containment workflows.',
-        impact: 'Up to 30% reduction in quality scrap and rework costs.',
+        impact: "Measure scrap rate, rework hours and associated costs.",
       },
       {
         area: 'SMED Setup Time Compression',
         focus: 'Rapid tool changeover protocols and pre-staged tooling standardization.',
-        impact: '35% reduction in production changeover downtime.',
+        impact: "Track time from the last good unit of one run to the first good unit of the next.",
       },
     ],
     consultingSupport: [
@@ -180,23 +175,6 @@ export const industries: IndustrySector[] = [
     relevantInsights: [
       'manufacturing-process-visibility',
       'processes-suitable-for-automation',
-    ],
-    outcomes: [
-      {
-        metric: '18-25%',
-        label: 'Downtime Reduction',
-        detail: 'Achieved through proactive condition monitoring and rapid response protocols.',
-      },
-      {
-        metric: '14%',
-        label: 'OEE Lift',
-        detail: 'Average gain across production lines following process bottleneck elimination.',
-      },
-      {
-        metric: '28%',
-        label: 'Scrap & Defect Lowering',
-        detail: 'Driven by standardized operating procedures and in-line telemetry checks.',
-      },
     ],
     valueProposition:
       'We help industrial manufacturers unlock hidden capacity, stabilize daily output, and build resilient smart factory foundations.',
@@ -283,17 +261,17 @@ export const industries: IndustrySector[] = [
       {
         area: 'On-Time In-Full (OTIF) Delivery',
         focus: 'Standardize dock appointment scheduling and pre-assembled pallet configurations.',
-        impact: 'Achieve 97%+ customer fulfillment compliance with major retail chains.',
+        impact: "Track orders delivered in full and on time against each retailer’s requirements.",
       },
       {
         area: 'SKU Complexity Rationalization',
-        focus: 'Evaluate gross margin return on inventory (GMROI) across bottom 20% slow-moving items.',
-        impact: '15-20% reduction in working capital locked in non-productive inventory.',
+        focus: 'Evaluate gross margin return on inventory (GMROI) for slow-moving items.',
+        impact: "Track inventory value, turnover and margin by product group.",
       },
       {
         area: 'Secondary Freight Optimization',
         focus: 'Dynamic route consolidation and backhaul utilization for regional fleet partners.',
-        impact: '10-14% decrease in per-case freight and logistics costs.',
+        impact: "Compare freight cost per case across routes and shipment sizes.",
       },
     ],
     consultingSupport: [
@@ -322,23 +300,6 @@ export const industries: IndustrySector[] = [
     relevantInsights: [
       'fmcg-distribution-planning',
       'handoffs-behind-supply-chain-delays',
-    ],
-    outcomes: [
-      {
-        metric: '98.2%',
-        label: 'On-Shelf Availability',
-        detail: 'Sustained retail availability during high-volume promotional campaign windows.',
-      },
-      {
-        metric: '22%',
-        label: 'Working Capital Released',
-        detail: 'Freed from safety-stock reductions via enhanced demand sensing precision.',
-      },
-      {
-        metric: '12%',
-        label: 'Logistics Cost Savings',
-        detail: 'Realized through load consolidation and optimized regional depot networks.',
-      },
     ],
     valueProposition:
       'We enable FMCG organizations to navigate retail complexity, synchronize supply with demand, and maximize category profitability.',
@@ -430,17 +391,17 @@ export const industries: IndustrySector[] = [
       {
         area: 'Deployment Lead Time Compression',
         focus: 'Automate build, integration, and security testing pipelines across product teams.',
-        impact: 'Reduce release cycle times from bi-monthly windows to multiple releases per week.',
+        impact: "Track release frequency and lead time for changes.",
       },
       {
         area: 'Cloud Infrastructure Optimization',
         focus: 'Right-size compute instances, eliminate orphan storage, and leverage reserved instance planning.',
-        impact: '20-35% recurring reduction in total cloud operating expenditure.',
+        impact: "Measure cloud cost per workload and overall operating spend.",
       },
       {
         area: 'IT Incident Management & MTTR',
         focus: 'Implement unified observability (APM) and automated incident triage playbooks.',
-        impact: '40% reduction in Mean Time to Resolution (MTTR) for high-priority incidents.',
+        impact: "Track median recovery time for high-priority incidents.",
       },
     ],
     consultingSupport: [
@@ -469,23 +430,6 @@ export const industries: IndustrySector[] = [
     relevantInsights: [
       'practical-digital-transformation-roadmap',
       'data-readiness-before-an-ai-pilot',
-    ],
-    outcomes: [
-      {
-        metric: '32%',
-        label: 'Cloud Cost Reduction',
-        detail: 'Achieved through systematic FinOps audit, instance right-sizing, and lifecycle automation.',
-      },
-      {
-        metric: '4x',
-        label: 'Release Frequency',
-        detail: 'Accelerated through standardized automated test pipelines and trunk-based deployment practices.',
-      },
-      {
-        metric: '99.99%',
-        label: 'System Resilience',
-        detail: 'Maintained during peak transaction spikes following high-availability architecture refactoring.',
-      },
     ],
     valueProposition:
       'We guide IT leaders to architect scalable, secure enterprise platforms that drive digital business acceleration and cost efficiency.',
@@ -572,17 +516,17 @@ export const industries: IndustrySector[] = [
       {
         area: 'Admissions Decision Turnaround',
         focus: 'Digitize transcript intake and automate preliminary prerequisite verification.',
-        impact: 'Reduce application-to-offer turnaround times from 3 weeks to under 4 business days.',
+        impact: "Track elapsed time from application submission to admission decision.",
       },
       {
         area: 'Classroom & Laboratory Scheduling',
         focus: 'Deploy algorithmic room allocation based on enrolled cohort sizes and pedagogical needs.',
-        impact: '24% increase in academic room utilization, deferring costly capital construction.',
+        impact: "Track scheduled and actual room utilization by time and location.",
       },
       {
         area: 'Financial Aid & Bursar Processing',
         focus: 'Streamline scholarship disbursement, billing reconciliation, and payment installment plans.',
-        impact: '50% reduction in peak-period student service queue times.',
+        impact: "Compare median service wait times during peak periods.",
       },
     ],
     consultingSupport: [
@@ -611,23 +555,6 @@ export const industries: IndustrySector[] = [
     relevantInsights: [
       'digital-opportunities-in-education',
       'processes-suitable-for-automation',
-    ],
-    outcomes: [
-      {
-        metric: '65%',
-        label: 'Faster Admissions',
-        detail: 'Accelerated application review times, capturing higher initial student acceptance rates.',
-      },
-      {
-        metric: '18%',
-        label: 'Retention Improvement',
-        detail: 'Achieved through automated early-warning intervention triggers for struggling students.',
-      },
-      {
-        metric: '22%',
-        label: 'Administrative Cost Savings',
-        detail: 'Realized through shared administrative services and automated transcript verification.',
-      },
     ],
     valueProposition:
       'We empower educational institutions to enrich student outcomes, simplify administrative complexity, and build enduring institutional resilience.',
@@ -714,17 +641,17 @@ export const industries: IndustrySector[] = [
       {
         area: 'Store Order Picking Efficiency',
         focus: 'Deploy wave-picking algorithms and optimal store aisle travel paths on associate mobile devices.',
-        impact: '45% increase in items picked per labor hour for click-and-collect orders.',
+        impact: "Track order lines picked per labor hour and order accuracy.",
       },
       {
         area: 'Inventory Accuracy & Cycle Counting',
         focus: 'Implement RFID scanning protocols and weekly perpetual inventory reconciliation.',
-        impact: 'Attain 99.1% on-hand inventory record accuracy across store networks.',
+        impact: "Compare recorded stock with physical counts across stores.",
       },
       {
         area: 'Markdown Optimization',
         focus: 'Algorithmically calculate localized markdown cadences based on regional sales velocity.',
-        impact: '8-12% higher gross margin recovery on seasonal end-of-line stock.',
+        impact: "Track sell-through and gross margin on seasonal stock.",
       },
     ],
     consultingSupport: [
@@ -753,23 +680,6 @@ export const industries: IndustrySector[] = [
     relevantInsights: [
       'handoffs-behind-supply-chain-delays',
       'data-readiness-before-an-ai-pilot',
-    ],
-    outcomes: [
-      {
-        metric: '99.1%',
-        label: 'Inventory Accuracy',
-        detail: 'Achieved across full store networks, eliminating phantom inventory cancellations.',
-      },
-      {
-        metric: '35%',
-        label: 'Lower Fulfillment Cost',
-        detail: 'Achieved by shipping online customer orders directly from nearby local retail stores.',
-      },
-      {
-        metric: '16%',
-        label: 'Gross Margin Growth',
-        detail: 'Realized through targeted, dynamic promotional pricing and reduced broad markdowns.',
-      },
     ],
     valueProposition:
       'We enable retailers to connect physical stores with digital convenience, optimize order fulfillment, and drive sustainable retail growth.',
@@ -856,17 +766,17 @@ export const industries: IndustrySector[] = [
       {
         area: 'Dock Turnaround Time (Dwell Time)',
         focus: 'Standardize trailer loading protocols and implement pre-staged pallet manifests.',
-        impact: 'Reduce average truck turnaround times at loading bays by 38 minutes per vehicle.',
+        impact: "Track time from vehicle arrival to departure at the loading bay.",
       },
       {
         area: 'Warehouse Slotting & Pick Path Velocity',
         focus: 'Dynamically re-slot SKUs based on seasonal pick velocity and volumetric dimensions.',
-        impact: '26% reduction in total forklift travel mileage inside fulfillment centers.',
+        impact: "Measure forklift travel per order or pallet handled.",
       },
       {
         area: 'Freight Capacity Utilization',
         focus: '3D algorithmic pallet load building and trailer cube-out optimization.',
-        impact: 'Increase average trailer cubic volume utilization from 78% to 92%.',
+        impact: "Track each trailer’s occupied volume relative to its usable capacity.",
       },
     ],
     consultingSupport: [
@@ -895,23 +805,6 @@ export const industries: IndustrySector[] = [
     relevantInsights: [
       'handoffs-behind-supply-chain-delays',
       'fmcg-distribution-planning',
-    ],
-    outcomes: [
-      {
-        metric: '16.4%',
-        label: 'Transportation Cost Cut',
-        detail: 'Achieved through freight route optimization, cube-out improvements, and lane consolidation.',
-      },
-      {
-        metric: '98.6%',
-        label: 'On-Time Delivery Rate',
-        detail: 'Delivered consistently across regional retail and distributor delivery schedules.',
-      },
-      {
-        metric: '42 min',
-        label: 'Dock Turnaround Reduction',
-        detail: 'Saved per trailer via automated yard management and pre-staged loading gates.',
-      },
     ],
     valueProposition:
       'We partner with distribution leaders to compress transport costs, accelerate warehouse turnaround, and build agile logistics networks.',
@@ -956,9 +849,9 @@ export const industries: IndustrySector[] = [
       },
     ],
     operationalImprovement: [
-      { area: 'Priority setting', focus: 'Compare initiatives using a consistent set of decision criteria.', impact: 'A smaller, more actionable portfolio of priorities.' },
-      { area: 'Delivery ownership', focus: 'Assign sponsors, decision makers, milestones, and dependencies.', impact: 'Clear accountability from decision through implementation.' },
-      { area: 'Strategy review', focus: 'Check results and external signals at agreed intervals.', impact: 'Timely adjustments based on evidence.' },
+      { area: 'Priority setting', focus: 'Compare initiatives using a consistent set of decision criteria.', impact: 'Track funded initiatives against the agreed priorities.' },
+      { area: 'Delivery ownership', focus: 'Assign sponsors, decision makers, milestones, and dependencies.', impact: 'Check which initiatives have an owner, milestones and dependencies recorded.' },
+      { area: 'Strategy review', focus: 'Check results and external signals at agreed intervals.', impact: 'Record which assumptions changed and when each decision was reviewed.' },
     ],
     consultingSupport: [
       { pillar: 'Situation assessment', description: 'Build a shared view of the market, customers, performance, and internal capabilities.' },
@@ -967,11 +860,6 @@ export const industries: IndustrySector[] = [
     ],
     relevantServices: ['business-strategy', 'data-analytics-ai', 'supply-chain-operations', 'it-consulting'],
     relevantInsights: ['turning-strategy-into-decision-rules', 'data-readiness-before-an-ai-pilot'],
-    outcomes: [
-      { metric: 'Focus', label: 'Clear priorities', detail: 'A shared view of what matters most and why.' },
-      { metric: 'Choice', label: 'Better decisions', detail: 'Explicit assumptions, alternatives, and decision criteria.' },
-      { metric: 'Action', label: 'Owned delivery', detail: 'An implementation plan with responsibilities and review points.' },
-    ],
     valueProposition: 'We connect strategic choices with evidence, ownership, and a practical route to delivery.',
   },
   {
@@ -1047,17 +935,17 @@ export const industries: IndustrySector[] = [
       {
         area: 'Acquisition review',
         focus: 'Structure commercial, technical, and operating questions before committing to deeper due diligence.',
-        impact: 'A clearer record of assumptions, open questions, and decision owners.',
+        impact: 'Track open decisions, their owners and the evidence still needed.',
       },
       {
         area: 'Development coordination',
         focus: 'Map dependencies from design and approvals through procurement and handover.',
-        impact: 'Earlier visibility of handoffs and decisions that may affect delivery.',
+        impact: 'Track overdue handoffs and dependencies that affect delivery milestones.',
       },
       {
         area: 'Property operations',
         focus: 'Review service requests, maintenance planning, supplier performance, and tenant feedback.',
-        impact: 'A prioritized operating plan tied to asset and occupier needs.',
+        impact: 'Review operating priorities against asset requirements and occupier feedback.',
       },
     ],
     consultingSupport: [
@@ -1083,23 +971,6 @@ export const industries: IndustrySector[] = [
     relevantInsights: [
       'turning-strategy-into-decision-rules',
       'data-readiness-before-an-ai-pilot',
-    ],
-    outcomes: [
-      {
-        metric: 'Clarity',
-        label: 'Investment choices',
-        detail: 'A documented basis for comparing opportunities, constraints, and risks.',
-      },
-      {
-        metric: 'Visibility',
-        label: 'Asset performance',
-        detail: 'Shared information about commercial and operating priorities.',
-      },
-      {
-        metric: 'Ownership',
-        label: 'Delivery plan',
-        detail: 'Named responsibilities and review points for the improvements selected.',
-      },
     ],
     valueProposition:
       'We help property and investment teams make informed choices and turn asset priorities into practical action.',

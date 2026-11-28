@@ -129,8 +129,7 @@ export function IndustryDetailPage() {
             eyebrow="OPERATIONAL RIGOR"
             title="Operational improvement disciplines."
           >
-            Targeted workflow interventions delivering immediate cost efficiency and long-term
-            stability.
+            Practical workflow changes and measures to track their effects over time.
           </SectionTitle>
 
           <div className="industry-detail-card-grid">
@@ -144,7 +143,7 @@ export function IndustryDetailPage() {
                   <strong>Focus:</strong> {op.focus}
                 </p>
                 <p className="operational-improvement-impact">
-                  <strong>Impact:</strong> {op.impact}
+                  <strong>What to track:</strong> {op.impact}
                 </p>
               </article>
             ))}
